@@ -455,8 +455,6 @@ abstract class AbstractBoleto implements BoletoContract
      */
     public function __construct($params = [])
     {
-        $this->campoCodigoBarras =  $params['campoCodigoBarras'];
-        $this->campoLinhaDigitavel = $params['campoLinhaDigitavel'];
         Util::fillClass($this, $params);
         // Marca a data de emissão para hoje, caso não especificada
         if (! $this->getDataDocumento()) {
@@ -1516,15 +1514,15 @@ abstract class AbstractBoleto implements BoletoContract
      * @param int $tipoProtesto
      *
      * @return AbstractBoleto
-     * @throws \Exception
+     * @throws Exception
      */
     public function setTipoProtesto($tipoProtesto)
     {
-        $tipoProtesto = (int)$tipoProtesto;
+        $tipoProtesto = (int) $tipoProtesto;
         $this->tipoProtesto = $tipoProtesto > 0 ? $tipoProtesto : 0;
 
-        if (!empty($tipoProtesto) && $this->getDiasProtesto() == 0) {
-            throw new \Exception('Você deve informar dias de protesto se informar tipo de protesto');
+        if (! empty($tipoProtesto) && $this->getDiasProtesto() == 0) {
+            throw new Exception('Você deve informar dias de protesto se informar tipo de protesto');
         }
 
         return $this;
