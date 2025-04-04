@@ -36,13 +36,6 @@ class Bv extends AbstractBoleto implements BoletoContract
     protected $carteiras = [1, 200, 300, 400, 500];
 
     /**
-     * Moeda
-     *
-     * @var int
-     */
-    protected $moeda = 0;
-
-    /**
      * Espécie do documento, coódigo para remessa
      *
      * @var string

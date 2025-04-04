@@ -168,7 +168,7 @@ class Bv extends AbstractRemessa implements RemessaContract
         $this->add(88, 93, $boleto->getDataVencimento()->format('dmy'));
         $this->add(94, 106, Util::formatCnab('9', $boleto->getValor(), 13, 2));
         $this->add(107, 109, $this->getCodigoBanco());
-        $this->add(110, 114, '0001');
+        $this->add(110, 114, '00001');
         $this->add(115, 116, $boleto->getEspecieDocCodigo('01', 400));
         $this->add(117, 117, $boleto->getAceite());
         $this->add(118, 123, $boleto->getDataDocumento()->format('dmy'));
@@ -183,12 +183,13 @@ class Bv extends AbstractRemessa implements RemessaContract
         }
         $this->add(126, 127, self::INSTRUCAO_SEM);
         $this->add(128, 136, '');
-        $this->add(137, 137, $boleto->getJuros() >= 0 ? '4' : '0'); // 0 Acatar parâmetro do convênio, 1 Percentual por dia, 2 Percentual Mensal, 3 Isento, 4 Valor ao Dia, 5 Valor ao Mês
+        $this->add(137, 137, $boleto->getJuros() >= 0 ? '4' : ''); // 0 Acatar parâmetro do convênio, 1 Percentual por dia, 2 Percentual Mensal, 3 Isento, 4 Valor ao Dia, 5 Valor ao Mês
         $this->add(138, 150, Util::formatCnab('9', $boleto->getMoraDia(), 13, 2));
         $this->add(151, 156, $boleto->getDesconto() > 0 ? $boleto->getDataDesconto()->format('dmy') : '000000');
+        $this->add(157, 169, Util::formatCnab('9', $boleto->getDesconto(), 13, 2));
         $this->add(170, 170, '0'); // Desconto -  0 Percentual, 1 Valor
         $this->add(171, 182, Util::formatCnab('9', 0, 12, 2));
-        $this->add(183, 195, Util::formatCnab('9', $boleto->getDesconto(), 13, 2));
+        $this->add(183, 195, Util::formatCnab('9', 0, 13, 2));
         $this->add(196, 197, strlen(Util::onlyNumbers($boleto->getPagador()->getDocumento())) == 14 ? '02' : '01');
         $this->add(198, 211, Util::formatCnab('9L', $boleto->getPagador()->getDocumento(), 14));
         $this->add(212, 251, Util::formatCnab('X', $boleto->getPagador()->getNome(), 40));
@@ -201,8 +202,8 @@ class Bv extends AbstractRemessa implements RemessaContract
         $this->add(329, 368, Util::formatCnab('X', $boleto->getSacadorAvalista() ? $boleto->getSacadorAvalista()->getNome() : '', 40));
         $this->add(369, 374, $boleto->getMultaApos() === false ? $boleto->getDataVencimento()->copy()->format('dmy') : $boleto->getDataVencimento()->copy()->addDays($boleto->getMultaApos())->format('dmy'));
         $this->add(375, 376, $diasAux);
-        $this->add(377, 377, $boleto->getMoeda());
-        $this->add(378, 395, $boleto->getMoeda());
+        $this->add(377, 377, '0');
+        $this->add(378, 395, '');
         $this->add(395, 400, Util::formatCnab('9', $this->iRegistros + 1, 6));
 
         if ($boleto->getMulta() > 0) {
