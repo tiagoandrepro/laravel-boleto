@@ -117,7 +117,7 @@ class Bv extends AbstractRemessa implements RemessaContract
         $this->add(27, 46, '');
         $this->add(47, 76, Util::formatCnab('X', $this->getBeneficiario()->getNome(), 30));
         $this->add(77, 79, $this->getCodigoBanco());
-        $this->add(80, 99, Util::formatCnab('X', 'BANCO VOTORANTIM S/A', 20));
+        $this->add(80, 99, 'BANCO VOTORANTIM S/A');
         $this->add(100, 105, $this->getDataRemessa('dmy'));
         $this->add(106, 389, '');
         $this->add(390, 394, Util::formatCnab('X', 'CL001', 5));
@@ -146,6 +146,7 @@ class Bv extends AbstractRemessa implements RemessaContract
             throw new ValidationException('Tipo de beneficiário inválido');
         }
         $this->add(4, 17, Util::formatCnab('9L', $this->getBeneficiario()->getDocumento(), 14));
+        $this->add(18, 19, '00');
         $this->add(20, 29, Util::formatCnab('9', $this->getConvenio(), 10));
         $this->add(30, 37, ''); // Número do Contrato Externo
         $this->add(38, 62, Util::formatCnab('X', $boleto->getNumeroControle(), 25)); // numero de controle
@@ -183,7 +184,7 @@ class Bv extends AbstractRemessa implements RemessaContract
         }
         $this->add(126, 127, self::INSTRUCAO_SEM);
         $this->add(128, 136, '');
-        $this->add(137, 137, $boleto->getJuros() >= 0 ? '4' : ''); // 0 Acatar parâmetro do convênio, 1 Percentual por dia, 2 Percentual Mensal, 3 Isento, 4 Valor ao Dia, 5 Valor ao Mês
+        $this->add(137, 137, ''); // Branco Percentual por dia ou Acatar parâmetro do convênio, 0 Acatar parâmetro do convênio, 1 Percentual por dia, 2 Percentual Mensal, 3 Isento, 4 Valor ao Dia, 5 Valor ao Mês
         $this->add(138, 150, Util::formatCnab('9', $boleto->getMoraDia(), 13, 2));
         $this->add(151, 156, $boleto->getDesconto() > 0 ? $boleto->getDataDesconto()->format('dmy') : '000000');
         $this->add(157, 169, Util::formatCnab('9', $boleto->getDesconto(), 13, 2));
