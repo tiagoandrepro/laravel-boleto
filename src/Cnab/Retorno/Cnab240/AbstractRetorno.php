@@ -153,7 +153,7 @@ abstract class AbstractRetorno extends AbstractRetornoGeneric
         }
 
         if (! $trailer) {
-            $this->processarTrailer(array_fill(0, 240, ''));
+            $this->processarTrailer(array_fill(0, 240, '0'));
         }
 
         if (method_exists($this, 'finalize')) {

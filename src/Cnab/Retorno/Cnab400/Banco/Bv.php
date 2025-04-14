@@ -24,12 +24,12 @@ class Bv extends AbstractRetorno implements RetornoCnab400
      * @var array
      */
     private $ocorrencias = [
-        '2'  => 'Entrada confirmada',
-        '3'  => 'Entrada rejeitada (nota 11 - tabela 1)',
-        '6'  => 'Liquidação normal',
-        '7'  => 'Liquidação parcial',
-        '8'  => 'Liquidação em cartório',
-        '9'  => 'Baixa simples',
+        '02' => 'Entrada confirmada',
+        '03' => 'Entrada rejeitada (nota 11 - tabela 1)',
+        '06' => 'Liquidação normal',
+        '07' => 'Liquidação parcial',
+        '08' => 'Liquidação em cartório',
+        '09' => 'Baixa simples',
         '12' => 'Abatimento concedido',
         '14' => 'Vencimento alterado',
         '16' => 'Instruções rejeitadas (nota 11 - tabela 2)',
@@ -235,7 +235,7 @@ class Bv extends AbstractRetorno implements RetornoCnab400
     {
         $this->getTrailer()
             ->setQuantidadeTitulos((int) $this->rem(18, 25, $trailer))
-            ->setValorTitulos((float) (int) $this->rem(26, 39, $trailer))
+            ->setValorTitulos(Util::nFloat($this->rem(26, 39, $trailer) / 100, 2, false))
             ->setQuantidadeEntradas((int) $this->totais['entradas'])
             ->setQuantidadeLiquidados((int) $this->totais['liquidados'])
             ->setQuantidadeBaixados((int) $this->totais['baixados'])

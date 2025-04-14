@@ -1548,7 +1548,7 @@ abstract class AbstractBoleto implements BoletoContract
      */
     public function setDiasBaixaAutomatica($baixaAutomatica)
     {
-        $exception = sprintf('O banco %s não suporta baixa automática, pode usar também', basename(get_class($this)));
+        $exception = sprintf('O banco %s não suporta baixa automática', substr(strrchr(get_class($this), '\\'), 1));
         throw new ValidationException($exception);
     }
 

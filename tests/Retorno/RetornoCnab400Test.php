@@ -375,6 +375,27 @@ class RetornoCnab400Test extends TestCase
         }
     }
 
+    public function testRetornoBvCnab400()
+    {
+        $retorno = \Eduardokum\LaravelBoleto\Cnab\Retorno\Factory::make(__DIR__ . '/files/cnab400/bv.ret');
+        $retorno->processar();
+
+        $this->assertNotNull($retorno->getHeader());
+        $this->assertNotNull($retorno->getDetalhes());
+        $this->assertNotNull($retorno->getTrailer());
+
+        $this->assertEquals('Banco Votorantim S.A.', $retorno->getBancoNome());
+        $this->assertEquals('655', $retorno->getCodigoBanco());
+
+        $this->assertInstanceOf(Collection::class, $retorno->getDetalhes());
+        $this->assertInstanceOf(Detalhe::class, $retorno->getDetalhe(1));
+
+        foreach ($retorno->getDetalhes() as $detalhe) {
+            $this->assertInstanceOf(Detalhe::class, $detalhe);
+            $this->assertArrayHasKey('numeroDocumento', $detalhe->toArray());
+        }
+    }
+
     public function testRetornoOurinvestCnab400()
     {
         $retorno = \Eduardokum\LaravelBoleto\Cnab\Retorno\Factory::make(__DIR__ . '/files/cnab400/ourinvest.ret');
