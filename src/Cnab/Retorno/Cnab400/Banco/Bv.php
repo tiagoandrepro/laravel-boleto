@@ -168,7 +168,7 @@ class Bv extends AbstractRetorno implements RetornoCnab400
             ->setCodigoCliente($this->rem(27, 36, $header))
             ->setConta($this->rem(37, 45, $header))
             ->setContaDv($this->rem(46, 46, $header))
-            ->setData($this->rem(95, 100, $header));
+            ->setData($this->rem(100, 105, $header));
 
         return true;
     }

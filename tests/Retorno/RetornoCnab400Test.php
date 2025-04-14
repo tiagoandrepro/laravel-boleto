@@ -6,6 +6,7 @@ use Exception;
 use Illuminate\Support\Collection;
 use Eduardokum\LaravelBoleto\Tests\TestCase;
 use Eduardokum\LaravelBoleto\Cnab\Retorno\Cnab400\Detalhe;
+use Eduardokum\LaravelBoleto\Exception\ValidationException;
 use Eduardokum\LaravelBoleto\Cnab\Retorno\Cnab400\Banco\Bradesco;
 
 class RetornoCnab400Test extends TestCase
@@ -424,5 +425,12 @@ class RetornoCnab400Test extends TestCase
         $this->assertNull($retorno->current()->getId());
         $this->assertNull($retorno->current()->getPixChave());
         $this->assertNull($retorno->current()->getPixChaveTipo());
+    }
+
+    public function testRetornoSemDetalheCnab400()
+    {
+        $this->expectException(ValidationException::class);
+        $retorno = \Eduardokum\LaravelBoleto\Cnab\Retorno\Factory::make(__DIR__ . '/files/cnab400/retorno_sem_detalhe.ret');
+        $retorno->processar();
     }
 }
