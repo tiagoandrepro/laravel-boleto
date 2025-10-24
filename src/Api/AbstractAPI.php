@@ -621,10 +621,15 @@ abstract class AbstractAPI implements Api
         foreach (explode("\r\n", $retorno->headers_text) as $i => $line) {
             if ($i === 0) {
                 $retorno->headers['http_code'] = $line;
-            } else {
-                [$key, $value] = explode(': ', $line);
-                $retorno->headers[$key] = $value;
+                continue;
             }
+            if ($line === '' || strpos($line, ':') === false) {
+                continue;
+            }
+            [$key, $value] = explode(':', $line, 2);
+            $key = trim($key);
+            $value = ltrim($value, ' ');
+            $retorno->headers[$key] = $value;
         }
         $retorno->body = json_decode($retorno->body_text);
 

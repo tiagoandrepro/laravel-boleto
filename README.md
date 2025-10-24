@@ -4,12 +4,24 @@
 [![build](https://github.com/eduardokum/laravel-boleto/actions/workflows/build.yml/badge.svg)](https://github.com/eduardokum/laravel-boleto/actions/workflows/build.yml)
 [![GitHub forks](https://img.shields.io/github/forks/eduardokum/laravel-boleto.svg?style=social&label=Fork)](https://github.com/eduardokum/laravel-boleto)
 
+## Atualização realizada por IA (2025-10-25)
+Este projeto foi atualizado com auxílio de IA (Junie, JetBrains) para modernizar requisitos e infraestrutura.
+
+Resumo das mudanças:
+- Compatibilidade oficial com PHP 8.2+ (testado em 8.2/8.3/8.4)
+- Suporte oficial ao Laravel 10, 11 e 12
+- Matriz do CI (GitHub Actions) atualizada e simplificada
+- Parser HTTP mais robusto em Api\AbstractAPI
+- Documentação e README atualizados
+
+Veja o detalhamento completo em: UPDATE.md
+
 # Laravel Boleto
 Pacote para gerar boletos, remessas e leitura de retorno.
 
-**Projeto atualizado para o PHP 7.2, utilize sempre a última versão do PHP**
+**Projeto atualizado para PHP 8.2+ (testado em 8.2/8.3/8.4)**
 
-**Suporte ao Laravel 6 em diante**
+**Suporte oficial ao Laravel 10, 11 e 12**
 
 [Documentação do Projeto](https://laravel-boleto.readthedocs.io/)
 

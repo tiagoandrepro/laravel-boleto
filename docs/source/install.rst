@@ -1,19 +1,21 @@
 Installation
 ============
 
-**Requirements**
+Requirements
+------------
 
-- `Intl Extension <http://php.net/manual/pt_BR/book.intl.php>`_
-- `Php 5.6 <http://php.net/releases/5_6_0.php>`_
-- `Php 7.0 <http://php.net/releases/7_0_0.php>`_ **We strongly recommend php 7.0 above**
-
+- PHP 8.2+ (tested on 8.2/8.3/8.4)
+- Extensions: intl, mbstring, curl, json, openssl
+- Optional: Laravel 10/11/12 (the library can run standalone with Illuminate components)
 
 At the command line::
 
-    composer require "eduardokum/laravel-boleto"
+    composer require eduardokum/laravel-boleto
 
-Or, Put in your composer.json file::
+Or, put in your composer.json file::
 
     {
-        "eduardokum/laravel-boleto": "~0.8"
+        "require": {
+            "eduardokum/laravel-boleto": "^1.0"
+        }
     }
