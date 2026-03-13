@@ -1339,8 +1339,17 @@ final class Util
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($curl, CURLOPT_URL, $location);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, true);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 2);
+        curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 30);
+        curl_setopt($curl, CURLOPT_TIMEOUT, 30);
+        curl_setopt($curl, CURLOPT_MAXREDIRS, 5);
+        curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
         $data = curl_exec($curl);
         curl_close($curl);
+        if ($data === false) {
+            return [];
+        }
         $datas = explode('.', $data);
         if (count($datas) !== 3) {
             return [];
