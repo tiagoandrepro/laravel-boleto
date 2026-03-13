@@ -567,6 +567,8 @@ abstract class AbstractAPI implements Api
             curl_setopt($curl, CURLOPT_KEYPASSWD, $senha);
         }
         curl_setopt($curl, CURLOPT_CAPATH, '/etc/ssl/certs/');
+        curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 30);
+        curl_setopt($curl, CURLOPT_TIMEOUT, 60);
         curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'POST');
         $this->curl = $curl;
 
@@ -632,6 +634,9 @@ abstract class AbstractAPI implements Api
             $retorno->headers[$key] = $value;
         }
         $retorno->body = json_decode($retorno->body_text);
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            $retorno->body = null;
+        }
 
         return $retorno;
     }

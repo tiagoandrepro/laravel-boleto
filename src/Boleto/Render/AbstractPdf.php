@@ -133,7 +133,7 @@ abstract class AbstractPdf extends FPDF
             $protection += $options[$permission];
         }
         if ($owner_pass === null) {
-            $owner_pass = uniqid(rand());
+            $owner_pass = bin2hex(random_bytes(16));
         }
         $this->encrypted = true;
         $this->padding = "\x28\xBF\x4E\x5E\x4E\x75\x8A\x41\x64\x00\x4E\x56\xFF\xFA\x01\x08" .
@@ -332,10 +332,6 @@ abstract class AbstractPdf extends FPDF
 
     protected function RC4($key, $data)
     {
-        if (function_exists('mcrypt_encrypt')) {
-            return mcrypt_encrypt(MCRYPT_ARCFOUR, $key, $data, MCRYPT_MODE_STREAM, '');
-        }
-
         if ($key != $this->last_key) {
             $k = str_repeat($key, 256 / strlen($key) + 1);
             $state = range(0, 255);
