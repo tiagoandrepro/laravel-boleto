@@ -401,6 +401,22 @@ final class Util
     }
 
     /**
+     * Arredondamento canônico de valores monetários (2 casas).
+     * Toda aritmética de dinheiro (juros, multa, proração) deve passar por
+     * aqui antes de ser exibida ou gravada em CNAB/código de barras, para
+     * que o arredondamento aconteça uma única vez e de forma consistente.
+     *
+     * @param float|string $value
+     * @param int $decimals
+     *
+     * @return float
+     */
+    public static function moneyRound($value, $decimals = 2)
+    {
+        return round((float) $value, $decimals);
+    }
+
+    /**
      * Return percent x of y;
      *
      * @param $big
@@ -527,8 +543,12 @@ final class Util
      */
     public static function fatorVencimento($date, $format = 'Y-m-d')
     {
-        $date = ($date instanceof Carbon) ? $date : Carbon::createFromFormat($format, $date)->setTime(0, 0, 0);
-        $fator = (new Carbon('1997-10-07'))->diffInDays($date);
+        $date = ($date instanceof Carbon) ? $date->copy() : Carbon::createFromFormat($format, $date);
+        $date = $date->startOfDay();
+        // Base FEBRABAN ancorada no MESMO fuso da data para que a diferença
+        // seja puramente de calendário (evita off-by-one entre timezones/DST)
+        $base = Carbon::create(1997, 10, 7, 0, 0, 0, $date->getTimezone());
+        $fator = (int) abs($base->diffInDays($date));
         $limit = $fator % 9000;
         if ($limit >= 1000) {
             return $limit;
@@ -909,10 +929,15 @@ final class Util
         $aFile = [];
         if ($file instanceof UploadedFile) {
             $aFile = file($file->getRealPath());
+            if ($aFile === false) {
+                throw new ValidationException('Arquivo enviado não pôde ser lido');
+            }
         } elseif (is_array($file) && isset($file[0]) && is_string($file[0])) {
             $aFile = $file;
-        } elseif (is_string($file) && is_file($file) && file_exists($file)) {
-            $aFile = file($file);
+        } elseif (is_string($file) && is_file($file)) {
+            if (! is_readable($file) || ($aFile = file($file)) === false) {
+                throw new ValidationException('Arquivo não pôde ser lido: ' . $file);
+            }
         } elseif (is_string($file) && strstr($file, PHP_EOL) !== false) {
             $file_content = explode(PHP_EOL, $file);
             if (empty(end($file_content))) {

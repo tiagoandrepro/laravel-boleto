@@ -2,6 +2,14 @@
 
 namespace Eduardokum\LaravelBoleto;
 
+/**
+ * Cálculo de dígitos verificadores por banco.
+ *
+ * Todos os métodos retornam string (o DV é sempre gravado em campo de
+ * largura fixa de CNAB/código de barras; alguns bancos usam dígitos
+ * alfabéticos como 'X' e 'P'). Métodos que podem não ter DV retornam
+ * ?string.
+ */
 class CalculoDV
 {
     /*
@@ -9,19 +17,19 @@ class CalculoDV
     | 001 - Banco do Brasil
     |--------------------------------------------------------------------------
     */
-    public static function bbAgencia($agencia)
+    public static function bbAgencia($agencia): string
     {
-        return Util::modulo11($agencia, 2, 9, 0, 'X');
+        return (string) Util::modulo11($agencia, 2, 9, 0, 'X');
     }
 
-    public static function bbContaCorrente($conta)
+    public static function bbContaCorrente($conta): string
     {
-        return Util::modulo11($conta, 2, 9, 0, 'X');
+        return (string) Util::modulo11($conta, 2, 9, 0, 'X');
     }
 
-    public static function bbNossoNumero($nossoNumero)
+    public static function bbNossoNumero($nossoNumero): ?string
     {
-        return strlen($nossoNumero) >= 17 ? null : Util::modulo11($nossoNumero);
+        return strlen($nossoNumero) >= 17 ? null : (string) Util::modulo11($nossoNumero);
     }
 
     /*
@@ -29,27 +37,27 @@ class CalculoDV
     | 004 - Banco do Nordeste
     |--------------------------------------------------------------------------
     */
-    public static function bnbAgencia($agencia)
+    public static function bnbAgencia($agencia): string
     {
         $dv = Util::modulo11($agencia, 2, 9, 0);
 
-        return $dv == 1 ? 'X' : $dv;
+        return $dv == 1 ? 'X' : (string) $dv;
     }
 
-    public static function bnbContaCorrente($agencia, $conta)
+    public static function bnbContaCorrente($agencia, $conta): string
     {
         $conta = sprintf('%03s%09s', self::bnbAgenciaReal($agencia), $conta);
         $dv = Util::modulo11($conta, 2, 9, 1);
         if ($dv > 1) {
-            return 11 - $dv;
+            return (string) (11 - $dv);
         }
 
-        return 0;
+        return '0';
     }
 
-    public static function bnbNossoNumero($nossoNumero)
+    public static function bnbNossoNumero($nossoNumero): string
     {
-        return Util::modulo11(Util::numberFormatGeral($nossoNumero, 7));
+        return (string) Util::modulo11(Util::numberFormatGeral($nossoNumero, 7));
     }
 
     private static function bnbAgenciaReal($agencia)
@@ -85,7 +93,7 @@ class CalculoDV
     | 033 - Santander
     |--------------------------------------------------------------------------
     */
-    public static function santanderContaCorrente($agencia, $conta)
+    public static function santanderContaCorrente($agencia, $conta): string
     {
         $n = Util::numberFormatGeral($agencia, 4)
             . '00'
@@ -98,12 +106,12 @@ class CalculoDV
         }
         $unidade = substr($sum, -1);
 
-        return $unidade == 0 ? $unidade : 10 - $unidade;
+        return (string) ($unidade == 0 ? $unidade : 10 - $unidade);
     }
 
-    public static function santanderNossoNumero($nossoNumero)
+    public static function santanderNossoNumero($nossoNumero): string
     {
-        return Util::modulo11($nossoNumero);
+        return (string) Util::modulo11($nossoNumero);
     }
 
     /*
@@ -111,7 +119,7 @@ class CalculoDV
     | 041 - Banrisul
     |--------------------------------------------------------------------------
     */
-    public static function banrisulAgencia($agencia)
+    public static function banrisulAgencia($agencia): string
     {
         $newDv1 = $dv1 = Util::modulo10($agencia);
         $dv2 = Util::modulo11($agencia . $dv1, 2, 7);
@@ -131,7 +139,7 @@ class CalculoDV
         return $dv1 . $dv2;
     }
 
-    public static function banrisulContaCorrente($conta)
+    public static function banrisulContaCorrente($conta): string
     {
         $chars = array_reverse(str_split($conta, 1));
         $sums = str_split('234567423', 1);
@@ -144,22 +152,22 @@ class CalculoDV
         $resto = $sum % 11;
 
         if ($resto == 0) {
-            return $resto;
+            return (string) $resto;
         }
 
         if ($resto == 1) {
-            return 6;
+            return '6';
         }
 
-        return 11 - $resto;
+        return (string) (11 - $resto);
     }
 
-    public static function banrisulNossoNumero($nossoNumero)
+    public static function banrisulNossoNumero($nossoNumero): string
     {
         return self::banrisulDuploDigito($nossoNumero);
     }
 
-    public static function banrisulDuploDigito($campo)
+    public static function banrisulDuploDigito($campo): string
     {
         $dv1 = Util::modulo10($campo);
         $dv2 = Util::modulo11($campo . $dv1, 2, 7, 1, 10);
@@ -184,22 +192,22 @@ class CalculoDV
     | 104 - Caixa Econômica Federal
     |--------------------------------------------------------------------------
     */
-    public static function cefAgencia($agencia)
+    public static function cefAgencia($agencia): string
     {
-        return Util::modulo11(Util::numberFormatGeral($agencia, 5));
+        return (string) Util::modulo11(Util::numberFormatGeral($agencia, 5));
     }
 
-    public static function cefContaCorrente($agencia, $conta)
+    public static function cefContaCorrente($agencia, $conta): string
     {
         $n = Util::numberFormatGeral($agencia, 5)
             . Util::numberFormatGeral($conta, 11);
 
-        return Util::modulo11($n);
+        return (string) Util::modulo11($n);
     }
 
-    public static function cefNossoNumero($nossoNumero)
+    public static function cefNossoNumero($nossoNumero): string
     {
-        return Util::modulo11($nossoNumero);
+        return (string) Util::modulo11($nossoNumero);
     }
 
     /*
@@ -207,14 +215,14 @@ class CalculoDV
     | 133 - Cresol
     |--------------------------------------------------------------------------
     */
-    public static function cresolContaCorrente($conta)
+    public static function cresolContaCorrente($conta): string
     {
-        return Util::modulo11($conta, 2, 9, 0, 'P');
+        return (string) Util::modulo11($conta, 2, 9, 0, 'P');
     }
 
-    public static function cresolNossoNumero($carteira, $nossoNumero)
+    public static function cresolNossoNumero($carteira, $nossoNumero): string
     {
-        return Util::modulo11($carteira . Util::numberFormatGeral($nossoNumero, 11), 2, 7, 0, 'P');
+        return (string) Util::modulo11($carteira . Util::numberFormatGeral($nossoNumero, 11), 2, 7, 0, 'P');
     }
 
     /*
@@ -222,21 +230,21 @@ class CalculoDV
     | 136 - Unicred
     |--------------------------------------------------------------------------
     */
-    public static function unicredAgencia($agencia)
+    public static function unicredAgencia($agencia): string
     {
         $dv = Util::modulo11($agencia);
 
-        return $dv == 11 ? 0 : $dv;
+        return (string) ($dv == 11 ? 0 : $dv);
     }
 
-    public static function unicredContaCorrente($conta)
+    public static function unicredContaCorrente($conta): string
     {
-        return Util::modulo11($conta);
+        return (string) Util::modulo11($conta);
     }
 
-    public static function unicredNossoNumero($nossoNumero)
+    public static function unicredNossoNumero($nossoNumero): string
     {
-        return Util::modulo11(Util::numberFormatGeral($nossoNumero, 10));
+        return (string) Util::modulo11(Util::numberFormatGeral($nossoNumero, 10));
     }
 
     /*
@@ -244,30 +252,30 @@ class CalculoDV
     | 084 - Sisprime
     |--------------------------------------------------------------------------
     */
-    public static function sisprimeAgencia($agencia)
+    public static function sisprimeAgencia($agencia): string
     {
         $dv = Util::modulo11($agencia);
 
-        return $dv == 11 ? 0 : $dv;
+        return (string) ($dv == 11 ? 0 : $dv);
     }
 
-    public static function sisprimeContaCorrente($conta)
+    public static function sisprimeContaCorrente($conta): string
     {
-        return Util::modulo11($conta);
+        return (string) Util::modulo11($conta);
     }
 
-    public static function sisprimeNossoNumero($nossoNumero)
+    public static function sisprimeNossoNumero($nossoNumero): string
     {
         $dv = Util::modulo11($nossoNumero, 2, 7, 1);
-        if ($dv == 1){
+        if ($dv == 1) {
             $dv = 'P';
-        }elseif ($dv == 0){
+        } elseif ($dv == 0) {
             $dv = 0;
-        }else {
+        } else {
             $dv = 11 - $dv;
         }
 
-        return $dv;
+        return (string) $dv;
     }
 
     /*
@@ -276,42 +284,42 @@ class CalculoDV
     |--------------------------------------------------------------------------
     */
 
-    public static function btgNossoNumero($carteira, $numero_boleto)
+    public static function btgNossoNumero($carteira, $numero_boleto): string
     {
         if (strlen($numero_boleto) < 11) {
             $numero_boleto = Util::numberFormatGeral($numero_boleto, 11);
         }
         $n = '0' . Util::numberFormatGeral($carteira, 2) . $numero_boleto;
 
-        return Util::modulo11($n, 2, 7, 0, 'P');
+        return (string) Util::modulo11($n, 2, 7, 0, 'P');
     }
 
-    public static function btgAgencia($agencia)
+    public static function btgAgencia($agencia): string
     {
-        return Util::modulo11($agencia);
+        return (string) Util::modulo11($agencia);
     }
 
-    public static function btgContaCorrente($conta)
+    public static function btgContaCorrente($conta): string
     {
-        return Util::modulo11($conta);
+        return (string) Util::modulo11($conta);
     }
 
     /*
- |--------------------------------------------------------------------------
- | 224 - Fibra
- |--------------------------------------------------------------------------
- */
-    public static function fibraAgencia($agencia)
+    |--------------------------------------------------------------------------
+    | 224 - Fibra
+    |--------------------------------------------------------------------------
+    */
+    public static function fibraAgencia($agencia): string
     {
-        return Util::modulo11($agencia);
+        return (string) Util::modulo11($agencia);
     }
 
-    public static function fibraConta($conta)
+    public static function fibraConta($conta): string
     {
-        return Util::modulo11($conta);
+        return (string) Util::modulo11($conta);
     }
 
-    public static function fibraNossoNumero($agencia, $nossaCarteira, $numero_boleto)
+    public static function fibraNossoNumero($agencia, $nossaCarteira, $numero_boleto): string
     {
         $n = Util::numberFormatGeral($agencia, 4)
             . Util::numberFormatGeral($nossaCarteira, 3)
@@ -332,7 +340,7 @@ class CalculoDV
             $factor++;
         }
 
-        return 10 - $sum % 10;
+        return (string) (10 - $sum % 10);
     }
 
     /*
@@ -340,21 +348,21 @@ class CalculoDV
     | 237 - Bradesco
     |--------------------------------------------------------------------------
     */
-    public static function bradescoAgencia($agencia)
+    public static function bradescoAgencia($agencia): string
     {
         $dv = Util::modulo11($agencia, 2, 9, 0, 'P');
 
-        return $dv == 11 ? 0 : $dv;
+        return (string) ($dv == 11 ? 0 : $dv);
     }
 
-    public static function bradescoContaCorrente($conta)
+    public static function bradescoContaCorrente($conta): string
     {
-        return Util::modulo11($conta, 2, 9, 0, 'P');
+        return (string) Util::modulo11($conta, 2, 9, 0, 'P');
     }
 
-    public static function bradescoNossoNumero($carteira, $nossoNumero)
+    public static function bradescoNossoNumero($carteira, $nossoNumero): string
     {
-        return Util::modulo11($carteira . Util::numberFormatGeral($nossoNumero, 11), 2, 7, 0, 'P');
+        return (string) Util::modulo11($carteira . Util::numberFormatGeral($nossoNumero, 11), 2, 7, 0, 'P');
     }
 
     /*
@@ -363,7 +371,7 @@ class CalculoDV
     |--------------------------------------------------------------------------
     */
 
-    public static function abcNossoNumero($agencia, $carteira, $nossoNumero)
+    public static function abcNossoNumero($agencia, $carteira, $nossoNumero): string
     {
         $numero = Util::numberFormatGeral($agencia, 4) . Util::numberFormatGeral($carteira, 3) . Util::numberFormatGeral($nossoNumero, 10);
         $factors = [2, 1];
@@ -376,7 +384,7 @@ class CalculoDV
 
         $mod = $sum % 10;
 
-        return ($mod == 0) ? 0 : 10 - $mod;
+        return (string) (($mod == 0) ? 0 : 10 - $mod);
     }
 
     /*
@@ -385,9 +393,9 @@ class CalculoDV
     |--------------------------------------------------------------------------
     */
 
-    public static function grafenoNossoNumero($carteira, $nossoNumero)
+    public static function grafenoNossoNumero($carteira, $nossoNumero): string
     {
-        return Util::modulo11(Util::numberFormatGeral($carteira, 2) . Util::numberFormatGeral($nossoNumero, 11), 2, 7, 0, 'P');
+        return (string) Util::modulo11(Util::numberFormatGeral($carteira, 2) . Util::numberFormatGeral($nossoNumero, 11), 2, 7, 0, 'P');
     }
 
     /*
@@ -396,9 +404,9 @@ class CalculoDV
     |--------------------------------------------------------------------------
     */
 
-    public static function vortxNossoNumero($carteira, $nossoNumero)
+    public static function vortxNossoNumero($carteira, $nossoNumero): string
     {
-        return Util::modulo11(Util::numberFormatGeral($carteira, 2) . Util::numberFormatGeral($nossoNumero, 11), 2, 7, 0, 'P');
+        return (string) Util::modulo11(Util::numberFormatGeral($carteira, 2) . Util::numberFormatGeral($nossoNumero, 11), 2, 7, 0, 'P');
     }
 
     /*
@@ -407,12 +415,12 @@ class CalculoDV
     |--------------------------------------------------------------------------
     */
 
-    public static function delcredNossoNumero($carteira, $nossoNumero)
+    public static function delcredNossoNumero($carteira, $nossoNumero): string
     {
         $agencia = '0019';
         $numeroFormatado = Util::numberFormatGeral($nossoNumero, 10);
 
-        return Util::modulo10($agencia . $carteira . $numeroFormatado);
+        return (string) Util::modulo10($agencia . $carteira . $numeroFormatado);
     }
 
     /*
@@ -421,11 +429,11 @@ class CalculoDV
     |--------------------------------------------------------------------------
     */
 
-    public static function c6NossoNumero($carteira, $numero_boleto)
+    public static function c6NossoNumero($carteira, $numero_boleto): string
     {
         $n = '0' . Util::numberFormatGeral($carteira, 2) . Util::numberFormatGeral($numero_boleto, 10);
 
-        return Util::modulo11($n, 2, 7, 0, 'P');
+        return (string) Util::modulo11($n, 2, 7, 0, 'P');
     }
 
     /*
@@ -433,22 +441,22 @@ class CalculoDV
     | 341 - Itau
     |--------------------------------------------------------------------------
     */
-    public static function itauContaCorrente($agencia, $conta)
+    public static function itauContaCorrente($agencia, $conta): string
     {
         $n = Util::numberFormatGeral($agencia, 4)
             . Util::numberFormatGeral($conta, 5);
 
-        return Util::modulo10($n);
+        return (string) Util::modulo10($n);
     }
 
-    public static function itauNossoNumero($agencia, $conta, $carteira, $numero_boleto)
+    public static function itauNossoNumero($agencia, $conta, $carteira, $numero_boleto): string
     {
         $n = Util::numberFormatGeral($agencia, 4)
             . Util::numberFormatGeral($conta, 5)
             . Util::numberFormatGeral($carteira, 3)
             . Util::numberFormatGeral($numero_boleto, 8);
 
-        return Util::modulo10($n);
+        return (string) Util::modulo10($n);
     }
 
     /*
@@ -456,17 +464,17 @@ class CalculoDV
     | 633 - Rendimento
     |--------------------------------------------------------------------------
     */
-    public static function rendimentoAgencia($agencia)
+    public static function rendimentoAgencia($agencia): string
     {
-        return Util::modulo11($agencia);
+        return (string) Util::modulo11($agencia);
     }
 
-    public static function rendimentoConta($conta)
+    public static function rendimentoConta($conta): string
     {
-        return Util::modulo11($conta);
+        return (string) Util::modulo11($conta);
     }
 
-    public static function rendimentoNossoNumero($agencia, $nossaCarteira, $numero_boleto)
+    public static function rendimentoNossoNumero($agencia, $nossaCarteira, $numero_boleto): string
     {
         $n = Util::numberFormatGeral($agencia, 4)
             . Util::numberFormatGeral($nossaCarteira, 3)
@@ -489,7 +497,7 @@ class CalculoDV
             $factor++;
         }
 
-        return 10 - $sum % 10;
+        return (string) (10 - $sum % 10);
     }
 
     /*
@@ -497,17 +505,17 @@ class CalculoDV
     | 643 - Pine
     |--------------------------------------------------------------------------
     */
-    public static function pineAgencia($agencia)
+    public static function pineAgencia($agencia): string
     {
-        return Util::modulo11($agencia);
+        return (string) Util::modulo11($agencia);
     }
 
-    public static function pineConta($conta)
+    public static function pineConta($conta): string
     {
-        return Util::modulo11($conta);
+        return (string) Util::modulo11($conta);
     }
 
-    public static function pineNossoNumero($agencia, $nossaCarteira, $numero_boleto)
+    public static function pineNossoNumero($agencia, $nossaCarteira, $numero_boleto): string
     {
         $n = Util::numberFormatGeral($agencia, 4)
             . Util::numberFormatGeral($nossaCarteira, 3)
@@ -528,22 +536,22 @@ class CalculoDV
             $factor++;
         }
 
-        return 10 - $sum % 10;
+        return (string) (10 - $sum % 10);
     }
 
     /*
     |--------------------------------------------------------------------------
-    | 655 - BTG
+    | 655 - BV
     |--------------------------------------------------------------------------
     */
 
-    public static function bvNossoNumero($numero_boleto)
+    public static function bvNossoNumero($numero_boleto): string
     {
         if (strlen($numero_boleto) < 9) {
             $numero_boleto = Util::numberFormatGeral($numero_boleto, 9);
         }
 
-        return Util::modulo11($numero_boleto, 2, 9, 0, 1);
+        return (string) Util::modulo11($numero_boleto, 2, 9, 0, 1);
     }
 
     /*
@@ -552,7 +560,7 @@ class CalculoDV
     |--------------------------------------------------------------------------
     */
 
-    public static function daycovalNossoNumero($agencia, $carteira, $nossoNumero)
+    public static function daycovalNossoNumero($agencia, $carteira, $nossoNumero): string
     {
         $numero = Util::numberFormatGeral($agencia, 4) . Util::numberFormatGeral($carteira, 3) . Util::numberFormatGeral($nossoNumero, 10);
         $factors = [2, 1];
@@ -565,7 +573,7 @@ class CalculoDV
 
         $mod = $sum % 10;
 
-        return ($mod == 0) ? 0 : 10 - $mod;
+        return (string) (($mod == 0) ? 0 : 10 - $mod);
     }
 
     /*
@@ -573,7 +581,7 @@ class CalculoDV
     | 748 - Sicredi - Falta o calculo agencia e conta
     |--------------------------------------------------------------------------
     */
-    public static function sicrediNossoNumero($agencia, $posto, $codigoCliente, $ano, $byte, $numero_boleto)
+    public static function sicrediNossoNumero($agencia, $posto, $codigoCliente, $ano, $byte, $numero_boleto): string
     {
         $n = Util::numberFormatGeral($agencia, 4)
             . Util::numberFormatGeral($posto, 2)
@@ -582,7 +590,7 @@ class CalculoDV
             . Util::numberFormatGeral($byte, 1)
             . Util::numberFormatGeral($numero_boleto, 5);
 
-        return Util::modulo11($n);
+        return (string) Util::modulo11($n);
     }
 
     /*
@@ -591,19 +599,19 @@ class CalculoDV
     |--------------------------------------------------------------------------
     */
 
-    public static function ourinvestNossoNumero($carteira, $nossoNumero)
+    public static function ourinvestNossoNumero($carteira, $nossoNumero): string
     {
-        return Util::modulo11(Util::numberFormatGeral($carteira, 2) . Util::numberFormatGeral($nossoNumero, 11), 2, 7, 0, 'P');
+        return (string) Util::modulo11(Util::numberFormatGeral($carteira, 2) . Util::numberFormatGeral($nossoNumero, 11), 2, 7, 0, 'P');
     }
 
-    public static function ourinvestAgencia($agencia)
+    public static function ourinvestAgencia($agencia): ?string
     {
         return null;
     }
 
-    public static function ourinvestConta($conta, $agencia = '0001')
+    public static function ourinvestConta($conta, $agencia = '0001'): string
     {
-        return Util::modulo10(Util::numberFormatGeral($agencia, 4) . Util::numberFormatGeral($conta, 7));
+        return (string) Util::modulo10(Util::numberFormatGeral($agencia, 4) . Util::numberFormatGeral($conta, 7));
     }
 
     /*
@@ -611,17 +619,17 @@ class CalculoDV
     | 756 - Bancoob - Falta o calculo conta e confirmar agencia
     |--------------------------------------------------------------------------
     */
-    public static function bancoobAgencia($agencia)
+    public static function bancoobAgencia($agencia): string
     {
-        return Util::modulo11($agencia);
+        return (string) Util::modulo11($agencia);
     }
 
-    public static function bancoobContaCorrente($conta)
+    public static function bancoobContaCorrente($conta): string
     {
-        return Util::modulo11($conta);
+        return (string) Util::modulo11($conta);
     }
 
-    public static function bancoobNossoNumero($agencia, $convenio, $numero_boleto)
+    public static function bancoobNossoNumero($agencia, $convenio, $numero_boleto): string
     {
         $n = Util::numberFormatGeral($agencia, 4)
             . Util::numberFormatGeral($convenio, 10)
@@ -640,6 +648,6 @@ class CalculoDV
             $dv = 11 - $resto;
         }
 
-        return $dv;
+        return (string) $dv;
     }
 }

@@ -4,11 +4,11 @@
         "type": "NULL"
     },
     "bnbAgencia_resto": {
-        "result": 5,
-        "type": "integer"
+        "result": "5",
+        "type": "string"
     },
     "sisprime_p": {
-        "result": 9,
-        "type": "integer"
+        "result": "9",
+        "type": "string"
     }
 }

@@ -1426,7 +1426,7 @@ abstract class AbstractBoleto implements BoletoContract
             return 0;
         }
 
-        return Util::percent($this->getValor(), $this->getJuros()) / 30;
+        return Util::moneyRound(Util::percent($this->getValor(), $this->getJuros()) / 30);
     }
 
     /**

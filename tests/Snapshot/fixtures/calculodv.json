@@ -6,8 +6,8 @@
                 "09",
                 "12345678901"
             ],
-            "result": 8,
-            "type": "integer"
+            "result": "8",
+            "type": "string"
         },
         {
             "args": [
@@ -15,8 +15,8 @@
                 "112",
                 "94373654102"
             ],
-            "result": 0,
-            "type": "integer"
+            "result": "0",
+            "type": "string"
         }
     ],
     "bancoobAgencia": [
@@ -24,15 +24,15 @@
             "args": [
                 "1111"
             ],
-            "result": 8,
-            "type": "integer"
+            "result": "8",
+            "type": "string"
         },
         {
             "args": [
                 "3978"
             ],
-            "result": 0,
-            "type": "integer"
+            "result": "0",
+            "type": "string"
         }
     ],
     "bancoobContaCorrente": [
@@ -40,15 +40,15 @@
             "args": [
                 "12345"
             ],
-            "result": 5,
-            "type": "integer"
+            "result": "5",
+            "type": "string"
         },
         {
             "args": [
                 "987654"
             ],
-            "result": 5,
-            "type": "integer"
+            "result": "5",
+            "type": "string"
         }
     ],
     "bancoobNossoNumero": [
@@ -58,8 +58,8 @@
                 "1234567",
                 "12345"
             ],
-            "result": 2,
-            "type": "integer"
+            "result": "2",
+            "type": "string"
         },
         {
             "args": [
@@ -67,8 +67,8 @@
                 "7654321",
                 "9876543"
             ],
-            "result": 9,
-            "type": "integer"
+            "result": "9",
+            "type": "string"
         }
     ],
     "banrisulAgencia": [
@@ -92,15 +92,15 @@
             "args": [
                 "12345"
             ],
-            "result": 5,
-            "type": "integer"
+            "result": "5",
+            "type": "string"
         },
         {
             "args": [
                 "987654"
             ],
-            "result": 5,
-            "type": "integer"
+            "result": "5",
+            "type": "string"
         }
     ],
     "banrisulDuploDigito": [
@@ -140,15 +140,15 @@
             "args": [
                 "1111"
             ],
-            "result": 8,
-            "type": "integer"
+            "result": "8",
+            "type": "string"
         },
         {
             "args": [
                 "3978"
             ],
-            "result": 0,
-            "type": "integer"
+            "result": "0",
+            "type": "string"
         }
     ],
     "bbContaCorrente": [
@@ -156,15 +156,15 @@
             "args": [
                 "12345"
             ],
-            "result": 5,
-            "type": "integer"
+            "result": "5",
+            "type": "string"
         },
         {
             "args": [
                 "987654"
             ],
-            "result": 5,
-            "type": "integer"
+            "result": "5",
+            "type": "string"
         }
     ],
     "bbNossoNumero": [
@@ -172,15 +172,15 @@
             "args": [
                 "12345678901"
             ],
-            "result": 0,
-            "type": "integer"
+            "result": "0",
+            "type": "string"
         },
         {
             "args": [
                 "94373654102"
             ],
-            "result": 1,
-            "type": "integer"
+            "result": "1",
+            "type": "string"
         }
     ],
     "bnbAgencia": [
@@ -188,15 +188,15 @@
             "args": [
                 "1111"
             ],
-            "result": 8,
-            "type": "integer"
+            "result": "8",
+            "type": "string"
         },
         {
             "args": [
                 "3978"
             ],
-            "result": 0,
-            "type": "integer"
+            "result": "0",
+            "type": "string"
         }
     ],
     "bnbAgenciaReal": [
@@ -221,16 +221,16 @@
                 "1111",
                 "12345"
             ],
-            "result": 9,
-            "type": "integer"
+            "result": "9",
+            "type": "string"
         },
         {
             "args": [
                 "3978",
                 "987654"
             ],
-            "result": 0,
-            "type": "integer"
+            "result": "0",
+            "type": "string"
         }
     ],
     "bnbNossoNumero": [
@@ -238,15 +238,15 @@
             "args": [
                 "12345678901"
             ],
-            "result": 9,
-            "type": "integer"
+            "result": "9",
+            "type": "string"
         },
         {
             "args": [
                 "94373654102"
             ],
-            "result": 5,
-            "type": "integer"
+            "result": "5",
+            "type": "string"
         }
     ],
     "bradescoAgencia": [
@@ -254,15 +254,15 @@
             "args": [
                 "1111"
             ],
-            "result": 8,
-            "type": "integer"
+            "result": "8",
+            "type": "string"
         },
         {
             "args": [
                 "3978"
             ],
-            "result": 0,
-            "type": "integer"
+            "result": "0",
+            "type": "string"
         }
     ],
     "bradescoContaCorrente": [
@@ -270,15 +270,15 @@
             "args": [
                 "12345"
             ],
-            "result": 5,
-            "type": "integer"
+            "result": "5",
+            "type": "string"
         },
         {
             "args": [
                 "987654"
             ],
-            "result": 5,
-            "type": "integer"
+            "result": "5",
+            "type": "string"
         }
     ],
     "bradescoNossoNumero": [
@@ -287,8 +287,8 @@
                 "09",
                 "12345678901"
             ],
-            "result": 0,
-            "type": "integer"
+            "result": "0",
+            "type": "string"
         },
         {
             "args": [
@@ -304,15 +304,15 @@
             "args": [
                 "1111"
             ],
-            "result": 8,
-            "type": "integer"
+            "result": "8",
+            "type": "string"
         },
         {
             "args": [
                 "3978"
             ],
-            "result": 0,
-            "type": "integer"
+            "result": "0",
+            "type": "string"
         }
     ],
     "btgContaCorrente": [
@@ -320,15 +320,15 @@
             "args": [
                 "12345"
             ],
-            "result": 5,
-            "type": "integer"
+            "result": "5",
+            "type": "string"
         },
         {
             "args": [
                 "987654"
             ],
-            "result": 5,
-            "type": "integer"
+            "result": "5",
+            "type": "string"
         }
     ],
     "btgNossoNumero": [
@@ -337,16 +337,16 @@
                 "09",
                 "12345"
             ],
-            "result": 8,
-            "type": "integer"
+            "result": "8",
+            "type": "string"
         },
         {
             "args": [
                 "112",
                 "9876543"
             ],
-            "result": 5,
-            "type": "integer"
+            "result": "5",
+            "type": "string"
         }
     ],
     "bvNossoNumero": [
@@ -354,15 +354,15 @@
             "args": [
                 "12345"
             ],
-            "result": 5,
-            "type": "integer"
+            "result": "5",
+            "type": "string"
         },
         {
             "args": [
                 "9876543"
             ],
-            "result": 4,
-            "type": "integer"
+            "result": "4",
+            "type": "string"
         }
     ],
     "c6NossoNumero": [
@@ -371,16 +371,16 @@
                 "09",
                 "12345"
             ],
-            "result": 6,
-            "type": "integer"
+            "result": "6",
+            "type": "string"
         },
         {
             "args": [
                 "112",
                 "9876543"
             ],
-            "result": 1,
-            "type": "integer"
+            "result": "1",
+            "type": "string"
         }
     ],
     "cefAgencia": [
@@ -388,15 +388,15 @@
             "args": [
                 "1111"
             ],
-            "result": 8,
-            "type": "integer"
+            "result": "8",
+            "type": "string"
         },
         {
             "args": [
                 "3978"
             ],
-            "result": 0,
-            "type": "integer"
+            "result": "0",
+            "type": "string"
         }
     ],
     "cefContaCorrente": [
@@ -405,16 +405,16 @@
                 "1111",
                 "12345"
             ],
-            "result": 1,
-            "type": "integer"
+            "result": "1",
+            "type": "string"
         },
         {
             "args": [
                 "3978",
                 "987654"
             ],
-            "result": 1,
-            "type": "integer"
+            "result": "1",
+            "type": "string"
         }
     ],
     "cefNossoNumero": [
@@ -422,15 +422,15 @@
             "args": [
                 "12345678901"
             ],
-            "result": 0,
-            "type": "integer"
+            "result": "0",
+            "type": "string"
         },
         {
             "args": [
                 "94373654102"
             ],
-            "result": 1,
-            "type": "integer"
+            "result": "1",
+            "type": "string"
         }
     ],
     "cresolContaCorrente": [
@@ -438,15 +438,15 @@
             "args": [
                 "12345"
             ],
-            "result": 5,
-            "type": "integer"
+            "result": "5",
+            "type": "string"
         },
         {
             "args": [
                 "987654"
             ],
-            "result": 5,
-            "type": "integer"
+            "result": "5",
+            "type": "string"
         }
     ],
     "cresolNossoNumero": [
@@ -455,8 +455,8 @@
                 "09",
                 "12345678901"
             ],
-            "result": 0,
-            "type": "integer"
+            "result": "0",
+            "type": "string"
         },
         {
             "args": [
@@ -474,8 +474,8 @@
                 "09",
                 "12345678901"
             ],
-            "result": 8,
-            "type": "integer"
+            "result": "8",
+            "type": "string"
         },
         {
             "args": [
@@ -483,8 +483,8 @@
                 "112",
                 "94373654102"
             ],
-            "result": 0,
-            "type": "integer"
+            "result": "0",
+            "type": "string"
         }
     ],
     "delcredNossoNumero": [
@@ -493,16 +493,16 @@
                 "09",
                 "12345678901"
             ],
-            "result": 4,
-            "type": "integer"
+            "result": "4",
+            "type": "string"
         },
         {
             "args": [
                 "112",
                 "94373654102"
             ],
-            "result": 7,
-            "type": "integer"
+            "result": "7",
+            "type": "string"
         }
     ],
     "fibraAgencia": [
@@ -510,15 +510,15 @@
             "args": [
                 "1111"
             ],
-            "result": 8,
-            "type": "integer"
+            "result": "8",
+            "type": "string"
         },
         {
             "args": [
                 "3978"
             ],
-            "result": 0,
-            "type": "integer"
+            "result": "0",
+            "type": "string"
         }
     ],
     "fibraConta": [
@@ -526,15 +526,15 @@
             "args": [
                 "12345"
             ],
-            "result": 5,
-            "type": "integer"
+            "result": "5",
+            "type": "string"
         },
         {
             "args": [
                 "987654"
             ],
-            "result": 5,
-            "type": "integer"
+            "result": "5",
+            "type": "string"
         }
     ],
     "fibraNossoNumero": [
@@ -544,8 +544,8 @@
                 "112",
                 "12345"
             ],
-            "result": 2,
-            "type": "integer"
+            "result": "2",
+            "type": "string"
         },
         {
             "args": [
@@ -553,8 +553,8 @@
                 "121",
                 "9876543"
             ],
-            "result": 7,
-            "type": "integer"
+            "result": "7",
+            "type": "string"
         }
     ],
     "grafenoNossoNumero": [
@@ -563,16 +563,16 @@
                 "09",
                 "12345678901"
             ],
-            "result": 0,
-            "type": "integer"
+            "result": "0",
+            "type": "string"
         },
         {
             "args": [
                 "112",
                 "94373654102"
             ],
-            "result": 9,
-            "type": "integer"
+            "result": "9",
+            "type": "string"
         }
     ],
     "itauContaCorrente": [
@@ -581,16 +581,16 @@
                 "1111",
                 "12345"
             ],
-            "result": 9,
-            "type": "integer"
+            "result": "9",
+            "type": "string"
         },
         {
             "args": [
                 "3978",
                 "987654"
             ],
-            "result": 3,
-            "type": "integer"
+            "result": "3",
+            "type": "string"
         }
     ],
     "itauNossoNumero": [
@@ -601,8 +601,8 @@
                 "09",
                 "12345"
             ],
-            "result": 9,
-            "type": "integer"
+            "result": "9",
+            "type": "string"
         },
         {
             "args": [
@@ -611,8 +611,8 @@
                 "112",
                 "9876543"
             ],
-            "result": 7,
-            "type": "integer"
+            "result": "7",
+            "type": "string"
         }
     ],
     "ourinvestAgencia": [
@@ -637,16 +637,16 @@
                 "12345",
                 "1111"
             ],
-            "result": 9,
-            "type": "integer"
+            "result": "9",
+            "type": "string"
         },
         {
             "args": [
                 "987654",
                 "3978"
             ],
-            "result": 3,
-            "type": "integer"
+            "result": "3",
+            "type": "string"
         }
     ],
     "ourinvestNossoNumero": [
@@ -655,16 +655,16 @@
                 "09",
                 "12345678901"
             ],
-            "result": 0,
-            "type": "integer"
+            "result": "0",
+            "type": "string"
         },
         {
             "args": [
                 "112",
                 "94373654102"
             ],
-            "result": 9,
-            "type": "integer"
+            "result": "9",
+            "type": "string"
         }
     ],
     "pineAgencia": [
@@ -672,15 +672,15 @@
             "args": [
                 "1111"
             ],
-            "result": 8,
-            "type": "integer"
+            "result": "8",
+            "type": "string"
         },
         {
             "args": [
                 "3978"
             ],
-            "result": 0,
-            "type": "integer"
+            "result": "0",
+            "type": "string"
         }
     ],
     "pineConta": [
@@ -688,15 +688,15 @@
             "args": [
                 "12345"
             ],
-            "result": 5,
-            "type": "integer"
+            "result": "5",
+            "type": "string"
         },
         {
             "args": [
                 "987654"
             ],
-            "result": 5,
-            "type": "integer"
+            "result": "5",
+            "type": "string"
         }
     ],
     "pineNossoNumero": [
@@ -706,8 +706,8 @@
                 "112",
                 "12345"
             ],
-            "result": 2,
-            "type": "integer"
+            "result": "2",
+            "type": "string"
         },
         {
             "args": [
@@ -715,8 +715,8 @@
                 "121",
                 "9876543"
             ],
-            "result": 7,
-            "type": "integer"
+            "result": "7",
+            "type": "string"
         }
     ],
     "rendimentoAgencia": [
@@ -724,15 +724,15 @@
             "args": [
                 "1111"
             ],
-            "result": 8,
-            "type": "integer"
+            "result": "8",
+            "type": "string"
         },
         {
             "args": [
                 "3978"
             ],
-            "result": 0,
-            "type": "integer"
+            "result": "0",
+            "type": "string"
         }
     ],
     "rendimentoConta": [
@@ -740,15 +740,15 @@
             "args": [
                 "12345"
             ],
-            "result": 5,
-            "type": "integer"
+            "result": "5",
+            "type": "string"
         },
         {
             "args": [
                 "987654"
             ],
-            "result": 5,
-            "type": "integer"
+            "result": "5",
+            "type": "string"
         }
     ],
     "rendimentoNossoNumero": [
@@ -758,8 +758,8 @@
                 "112",
                 "12345"
             ],
-            "result": 2,
-            "type": "integer"
+            "result": "2",
+            "type": "string"
         },
         {
             "args": [
@@ -767,8 +767,8 @@
                 "121",
                 "9876543"
             ],
-            "result": 7,
-            "type": "integer"
+            "result": "7",
+            "type": "string"
         }
     ],
     "santanderContaCorrente": [
@@ -777,8 +777,8 @@
                 "1111",
                 "12345"
             ],
-            "result": 5,
-            "type": "integer"
+            "result": "5",
+            "type": "string"
         },
         {
             "args": [
@@ -794,15 +794,15 @@
             "args": [
                 "12345678901"
             ],
-            "result": 0,
-            "type": "integer"
+            "result": "0",
+            "type": "string"
         },
         {
             "args": [
                 "94373654102"
             ],
-            "result": 1,
-            "type": "integer"
+            "result": "1",
+            "type": "string"
         }
     ],
     "sicrediNossoNumero": [
@@ -815,8 +815,8 @@
                 "2",
                 "12345"
             ],
-            "result": 8,
-            "type": "integer"
+            "result": "8",
+            "type": "string"
         },
         {
             "args": [
@@ -827,8 +827,8 @@
                 "3",
                 "9876543"
             ],
-            "result": 1,
-            "type": "integer"
+            "result": "1",
+            "type": "string"
         }
     ],
     "sisprimeAgencia": [
@@ -836,15 +836,15 @@
             "args": [
                 "1111"
             ],
-            "result": 8,
-            "type": "integer"
+            "result": "8",
+            "type": "string"
         },
         {
             "args": [
                 "3978"
             ],
-            "result": 0,
-            "type": "integer"
+            "result": "0",
+            "type": "string"
         }
     ],
     "sisprimeContaCorrente": [
@@ -852,15 +852,15 @@
             "args": [
                 "12345"
             ],
-            "result": 5,
-            "type": "integer"
+            "result": "5",
+            "type": "string"
         },
         {
             "args": [
                 "987654"
             ],
-            "result": 5,
-            "type": "integer"
+            "result": "5",
+            "type": "string"
         }
     ],
     "sisprimeNossoNumero": [
@@ -868,15 +868,15 @@
             "args": [
                 "12345678901"
             ],
-            "result": 8,
-            "type": "integer"
+            "result": "8",
+            "type": "string"
         },
         {
             "args": [
                 "94373654102"
             ],
-            "result": 7,
-            "type": "integer"
+            "result": "7",
+            "type": "string"
         }
     ],
     "unicredAgencia": [
@@ -884,15 +884,15 @@
             "args": [
                 "1111"
             ],
-            "result": 8,
-            "type": "integer"
+            "result": "8",
+            "type": "string"
         },
         {
             "args": [
                 "3978"
             ],
-            "result": 0,
-            "type": "integer"
+            "result": "0",
+            "type": "string"
         }
     ],
     "unicredContaCorrente": [
@@ -900,15 +900,15 @@
             "args": [
                 "12345"
             ],
-            "result": 5,
-            "type": "integer"
+            "result": "5",
+            "type": "string"
         },
         {
             "args": [
                 "987654"
             ],
-            "result": 5,
-            "type": "integer"
+            "result": "5",
+            "type": "string"
         }
     ],
     "unicredNossoNumero": [
@@ -916,15 +916,15 @@
             "args": [
                 "12345678901"
             ],
-            "result": 0,
-            "type": "integer"
+            "result": "0",
+            "type": "string"
         },
         {
             "args": [
                 "94373654102"
             ],
-            "result": 1,
-            "type": "integer"
+            "result": "1",
+            "type": "string"
         }
     ],
     "vortxNossoNumero": [
@@ -933,16 +933,16 @@
                 "09",
                 "12345678901"
             ],
-            "result": 0,
-            "type": "integer"
+            "result": "0",
+            "type": "string"
         },
         {
             "args": [
                 "112",
                 "94373654102"
             ],
-            "result": 9,
-            "type": "integer"
+            "result": "9",
+            "type": "string"
         }
     ]
 }
