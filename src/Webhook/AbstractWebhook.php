@@ -52,7 +52,7 @@ abstract class AbstractWebhook implements Webhook
         }
 
         $this->setPost($post);
-        $this->setPost($headers);
+        $this->setHeaders($headers);
     }
 
     /**
