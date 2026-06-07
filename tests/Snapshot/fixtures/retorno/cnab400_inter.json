@@ -1,0 +1,57 @@
+{
+    "banco": "077",
+    "header": {
+        "operacaoCodigo": "2",
+        "operacao": "RETORNO",
+        "servicoCodigo": "01",
+        "servico": "COBRANCA",
+        "agencia": "1",
+        "agenciaDv": null,
+        "conta": "10000000",
+        "contaDv": "0",
+        "data": "06/12/2021",
+        "convenio": null,
+        "codigoCliente": null,
+        "trash": []
+    },
+    "detalhes": [
+        {
+            "carteira": "112",
+            "nossoNumero": "00000000000",
+            "numeroDocumento": "1",
+            "numeroControle": "",
+            "codigoLiquidacao": null,
+            "ocorrencia": "02",
+            "ocorrenciaTipo": 3,
+            "ocorrenciaDescricao": "Em aberto",
+            "dataOcorrencia": "06/12/2021",
+            "dataVencimento": "07/12/2021",
+            "dataCredito": null,
+            "valor": "10.00",
+            "valorTarifa": null,
+            "valorOutrasDespesas": null,
+            "valorIOF": null,
+            "valorAbatimento": null,
+            "valorDesconto": null,
+            "valorRecebido": 0,
+            "valorMora": null,
+            "valorMulta": null,
+            "id": null,
+            "pixQrCode": null,
+            "pixLocation": null,
+            "error": null,
+            "trash": []
+        }
+    ],
+    "trailer": {
+        "valorTitulos": 0,
+        "avisos": 0,
+        "quantidadeTitulos": "00000001",
+        "quantidadeLiquidados": 0,
+        "quantidadeBaixados": 0,
+        "quantidadeEntradas": 1,
+        "quantidadeAlterados": 0,
+        "quantidadeErros": 0,
+        "trash": []
+    }
+}

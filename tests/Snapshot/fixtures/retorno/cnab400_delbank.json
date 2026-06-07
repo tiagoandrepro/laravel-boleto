@@ -1,0 +1,57 @@
+{
+    "banco": "435",
+    "header": {
+        "operacaoCodigo": "2",
+        "operacao": "RETORNO",
+        "servicoCodigo": "01",
+        "servico": "COBRANCA",
+        "agencia": "LCRED",
+        "agenciaDv": null,
+        "conta": "FUNDOLT",
+        "contaDv": "D",
+        "data": "24/05/2022",
+        "convenio": null,
+        "codigoCliente": "10138DELCREDFUNDOLTD",
+        "trash": []
+    },
+    "detalhes": [
+        {
+            "carteira": "112",
+            "nossoNumero": "00000196289",
+            "numeroDocumento": "TESTE123",
+            "numeroControle": "",
+            "codigoLiquidacao": null,
+            "ocorrencia": "02",
+            "ocorrenciaTipo": 3,
+            "ocorrenciaDescricao": "Entrada Confirmada",
+            "dataOcorrencia": "24/05/2022",
+            "dataVencimento": "10/06/2022",
+            "dataCredito": "24/05/2022",
+            "valor": "1000.00",
+            "valorTarifa": "1.50",
+            "valorOutrasDespesas": null,
+            "valorIOF": 0,
+            "valorAbatimento": 0,
+            "valorDesconto": 0,
+            "valorRecebido": 0,
+            "valorMora": 0,
+            "valorMulta": 0,
+            "id": null,
+            "pixQrCode": null,
+            "pixLocation": null,
+            "error": null,
+            "trash": []
+        }
+    ],
+    "trailer": {
+        "valorTitulos": 0,
+        "avisos": 0,
+        "quantidadeTitulos": "00000000",
+        "quantidadeLiquidados": 0,
+        "quantidadeBaixados": 0,
+        "quantidadeEntradas": 1,
+        "quantidadeAlterados": 0,
+        "quantidadeErros": 0,
+        "trash": []
+    }
+}

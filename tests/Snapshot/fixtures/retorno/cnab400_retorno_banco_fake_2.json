@@ -1,0 +1,4 @@
+{
+    "exception": "Eduardokum\\LaravelBoleto\\Exception\\ValidationException",
+    "message": "Arquivo: F:\\tmp\\laravel-boleto\\tests\\Snapshot/../Retorno/files/cnab400/retorno_banco_fake_2.ret, não é um arquivo de retorno"
+}

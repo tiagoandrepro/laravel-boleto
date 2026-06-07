@@ -1,0 +1,57 @@
+{
+    "banco": "001",
+    "header": {
+        "operacaoCodigo": "2",
+        "operacao": "RETORNO",
+        "servicoCodigo": "01",
+        "servico": "COBRANCA",
+        "agencia": "3344",
+        "agenciaDv": "8",
+        "conta": "1111",
+        "contaDv": "3",
+        "data": "08/09/2015",
+        "convenio": "1112245",
+        "codigoCliente": null,
+        "trash": []
+    },
+    "detalhes": [
+        {
+            "carteira": "18",
+            "nossoNumero": "11122450000000290",
+            "numeroDocumento": "",
+            "numeroControle": "",
+            "codigoLiquidacao": null,
+            "ocorrencia": "06",
+            "ocorrenciaTipo": 1,
+            "ocorrenciaDescricao": "Liquidação Normal",
+            "dataOcorrencia": "08/09/2015",
+            "dataVencimento": null,
+            "dataCredito": "10/09/2015",
+            "valor": "25.00",
+            "valorTarifa": "9.00",
+            "valorOutrasDespesas": 0,
+            "valorIOF": 0,
+            "valorAbatimento": 0,
+            "valorDesconto": 0,
+            "valorRecebido": "25.00",
+            "valorMora": 0,
+            "valorMulta": 0,
+            "id": null,
+            "pixQrCode": null,
+            "pixLocation": null,
+            "error": null,
+            "trash": []
+        }
+    ],
+    "trailer": {
+        "valorTitulos": 0,
+        "avisos": 0,
+        "quantidadeTitulos": 0,
+        "quantidadeLiquidados": 1,
+        "quantidadeBaixados": 0,
+        "quantidadeEntradas": 0,
+        "quantidadeAlterados": 0,
+        "quantidadeErros": 0,
+        "trash": []
+    }
+}

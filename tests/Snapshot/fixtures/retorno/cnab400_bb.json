@@ -1,0 +1,57 @@
+{
+    "banco": "001",
+    "header": {
+        "operacaoCodigo": "2",
+        "operacao": "RETORNO",
+        "servicoCodigo": "00",
+        "servico": "00000000",
+        "agencia": "1111",
+        "agenciaDv": "8",
+        "conta": "99999999",
+        "contaDv": "4",
+        "data": "20/10/2016",
+        "convenio": "1234567",
+        "codigoCliente": null,
+        "trash": []
+    },
+    "detalhes": [
+        {
+            "carteira": "00",
+            "nossoNumero": "12345670000000001",
+            "numeroDocumento": "1",
+            "numeroControle": "0000000000000000000000000",
+            "codigoLiquidacao": null,
+            "ocorrencia": "02",
+            "ocorrenciaTipo": 3,
+            "ocorrenciaDescricao": "Confirmação de Entrada de Título",
+            "dataOcorrencia": "20/10/2016",
+            "dataVencimento": "20/10/2016",
+            "dataCredito": null,
+            "valor": "100.00",
+            "valorTarifa": 0,
+            "valorOutrasDespesas": 0,
+            "valorIOF": 0,
+            "valorAbatimento": 0,
+            "valorDesconto": 0,
+            "valorRecebido": "100.00",
+            "valorMora": 0,
+            "valorMulta": 0,
+            "id": null,
+            "pixQrCode": null,
+            "pixLocation": null,
+            "error": null,
+            "trash": []
+        }
+    ],
+    "trailer": {
+        "valorTitulos": 0,
+        "avisos": 0,
+        "quantidadeTitulos": 0,
+        "quantidadeLiquidados": 0,
+        "quantidadeBaixados": 0,
+        "quantidadeEntradas": 1,
+        "quantidadeAlterados": 0,
+        "quantidadeErros": 0,
+        "trash": []
+    }
+}

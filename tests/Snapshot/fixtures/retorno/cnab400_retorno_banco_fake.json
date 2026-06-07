@@ -1,0 +1,4 @@
+{
+    "exception": "Eduardokum\\LaravelBoleto\\Exception\\ValidationException",
+    "message": "Banco: 999, inválido"
+}

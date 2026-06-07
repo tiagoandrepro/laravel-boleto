@@ -1,0 +1,57 @@
+{
+    "banco": "712",
+    "header": {
+        "operacaoCodigo": "2",
+        "operacao": "RETORNO",
+        "servicoCodigo": "00",
+        "servico": "000000000000000",
+        "agencia": "1111",
+        "agenciaDv": null,
+        "conta": "1234567",
+        "contaDv": "9",
+        "data": "30/04/2023",
+        "convenio": null,
+        "codigoCliente": "1234567",
+        "trash": []
+    },
+    "detalhes": [
+        {
+            "carteira": "000",
+            "nossoNumero": "000000000028",
+            "numeroDocumento": "2",
+            "numeroControle": "0000000000000000000000000",
+            "codigoLiquidacao": null,
+            "ocorrencia": "02",
+            "ocorrenciaTipo": 3,
+            "ocorrenciaDescricao": "Desconhecida",
+            "dataOcorrencia": "30/04/2023",
+            "dataVencimento": "30/04/2023",
+            "dataCredito": null,
+            "valor": "100.00",
+            "valorTarifa": 0,
+            "valorOutrasDespesas": null,
+            "valorIOF": 0,
+            "valorAbatimento": 0,
+            "valorDesconto": 0,
+            "valorRecebido": "100.00",
+            "valorMora": 0,
+            "valorMulta": 0,
+            "id": null,
+            "pixQrCode": null,
+            "pixLocation": null,
+            "error": null,
+            "trash": []
+        }
+    ],
+    "trailer": {
+        "valorTitulos": 0,
+        "avisos": 0,
+        "quantidadeTitulos": "00000000",
+        "quantidadeLiquidados": 0,
+        "quantidadeBaixados": 0,
+        "quantidadeEntradas": 1,
+        "quantidadeAlterados": 0,
+        "quantidadeErros": 0,
+        "trash": []
+    }
+}

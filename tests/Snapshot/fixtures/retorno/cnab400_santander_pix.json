@@ -1,0 +1,57 @@
+{
+    "banco": "033",
+    "header": {
+        "operacaoCodigo": "2",
+        "operacao": "RETORNO",
+        "servicoCodigo": "00",
+        "servico": "000000000000000",
+        "agencia": "1111",
+        "agenciaDv": null,
+        "conta": "999999999",
+        "contaDv": null,
+        "data": "20/10/2016",
+        "convenio": null,
+        "codigoCliente": null,
+        "trash": []
+    },
+    "detalhes": [
+        {
+            "carteira": "0",
+            "nossoNumero": "00000019",
+            "numeroDocumento": "1",
+            "numeroControle": "0000000000000000000000000",
+            "codigoLiquidacao": null,
+            "ocorrencia": "02",
+            "ocorrenciaTipo": 3,
+            "ocorrenciaDescricao": "Entrada título confirmada",
+            "dataOcorrencia": "20/10/2016",
+            "dataVencimento": "20/10/2016",
+            "dataCredito": null,
+            "valor": "100.00",
+            "valorTarifa": 0,
+            "valorOutrasDespesas": 0,
+            "valorIOF": 0,
+            "valorAbatimento": 0,
+            "valorDesconto": 0,
+            "valorRecebido": "100.00",
+            "valorMora": 0,
+            "valorMulta": 0,
+            "id": "id-da-transcao-pix",
+            "pixQrCode": null,
+            "pixLocation": "39a1178e-db6b-4407-bc7b-b674390acf5f",
+            "error": null,
+            "trash": []
+        }
+    ],
+    "trailer": {
+        "valorTitulos": 100.0,
+        "avisos": 0,
+        "quantidadeTitulos": 1,
+        "quantidadeLiquidados": 0,
+        "quantidadeBaixados": 0,
+        "quantidadeEntradas": 1,
+        "quantidadeAlterados": 0,
+        "quantidadeErros": 0,
+        "trash": []
+    }
+}

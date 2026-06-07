@@ -1,0 +1,4 @@
+{
+    "exception": "Eduardokum\\LaravelBoleto\\Exception\\ValidationException",
+    "message": "Nenhum registro do tipo detalhe encontrado no arquivo"
+}

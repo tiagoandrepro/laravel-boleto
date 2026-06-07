@@ -1,0 +1,14 @@
+{
+    "bbNossoNumero_17digitos": {
+        "result": null,
+        "type": "NULL"
+    },
+    "bnbAgencia_resto": {
+        "result": 5,
+        "type": "integer"
+    },
+    "sisprime_p": {
+        "result": 9,
+        "type": "integer"
+    }
+}

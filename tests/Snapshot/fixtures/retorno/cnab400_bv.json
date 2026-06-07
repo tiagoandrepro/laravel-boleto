@@ -1,0 +1,57 @@
+{
+    "banco": "655",
+    "header": {
+        "operacaoCodigo": "2",
+        "operacao": "RETORNO",
+        "servicoCodigo": "01",
+        "servico": "COBRANCA",
+        "agencia": null,
+        "agenciaDv": null,
+        "conta": "",
+        "contaDv": "",
+        "data": "11/04/2025",
+        "convenio": null,
+        "codigoCliente": "",
+        "trash": []
+    },
+    "detalhes": [
+        {
+            "carteira": "500",
+            "nossoNumero": "0000000019",
+            "numeroDocumento": "1",
+            "numeroControle": "1",
+            "codigoLiquidacao": "",
+            "ocorrencia": "48",
+            "ocorrenciaTipo": 4,
+            "ocorrenciaDescricao": "Alteração de percentual mínimo/ máximo",
+            "dataOcorrencia": null,
+            "dataVencimento": "03/05/2025",
+            "dataCredito": null,
+            "valor": "10.00",
+            "valorTarifa": 0,
+            "valorOutrasDespesas": null,
+            "valorIOF": 0,
+            "valorAbatimento": null,
+            "valorDesconto": 0,
+            "valorRecebido": 0,
+            "valorMora": 0,
+            "valorMulta": null,
+            "id": null,
+            "pixQrCode": null,
+            "pixLocation": null,
+            "error": null,
+            "trash": []
+        }
+    ],
+    "trailer": {
+        "valorTitulos": 0,
+        "avisos": 0,
+        "quantidadeTitulos": 0,
+        "quantidadeLiquidados": 0,
+        "quantidadeBaixados": 0,
+        "quantidadeEntradas": 0,
+        "quantidadeAlterados": 1,
+        "quantidadeErros": 0,
+        "trash": []
+    }
+}
