@@ -12,6 +12,24 @@ class Pessoa implements PessoaContract
     const TIPO_SACADOR = 'sacadorAvalista';
 
     /**
+     * Quando habilitado, setDocumento() valida o dígito verificador de
+     * CPF/CNPJ (opt-in para não quebrar consumidores com dados de teste).
+     *
+     * @var bool
+     */
+    protected static $validarDocumento = false;
+
+    /**
+     * Habilita/desabilita a validação de dígito verificador de CPF/CNPJ.
+     *
+     * @param bool $validar
+     */
+    public static function validarDocumentos($validar = true)
+    {
+        static::$validarDocumento = (bool) $validar;
+    }
+
+    /**
      * @var string
      */
     protected $tipo;
@@ -198,6 +216,11 @@ class Pessoa implements PessoaContract
         if (! in_array(strlen($documento), [10, 11, 14, 0])) {
             throw new ValidationException('Documento inválido');
         }
+
+        if (static::$validarDocumento && in_array(strlen($documento), [11, 14]) && ! Util::validarCnpjCpf($documento)) {
+            throw new ValidationException(sprintf('Documento inválido: dígito verificador de %s não confere', strlen($documento) == 11 ? 'CPF' : 'CNPJ'));
+        }
+
         $this->documento = $documento;
 
         return $this;

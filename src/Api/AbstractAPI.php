@@ -641,7 +641,7 @@ abstract class AbstractAPI implements Api
     {
         if ($this->getResponseHttpCode() < 200 || $this->getResponseHttpCode() > 299) {
             if (in_array($this->getResponseHttpCode(), [401, 403]) && empty($retorno->body_text)) {
-                throw new UnauthorizedException($this->getBaseUrl(), $this->getCertificado(), $this->getCertificadoChave(), $this->getCertificadoSenha());
+                throw new UnauthorizedException($this->getBaseUrl(), $this->getConta(), $this->getCertificado(), $this->getCertificadoChave());
             }
 
             throw new HttpException($this->getResponseHttpCode(), $this->getRequestInfo(), $retorno->body_text);
@@ -672,7 +672,7 @@ abstract class AbstractAPI implements Api
 
                 if ($this->isDebug()) {
                     fclose($this->log);
-                    $this->log = ob_get_clean();
+                    $this->log = $this->redactSensitiveData(ob_get_clean());
                 }
                 $retorno = $this->parseResponse($exec);
                 $this->handleException($retorno);
@@ -682,7 +682,7 @@ abstract class AbstractAPI implements Api
 
             if ($this->isDebug()) {
                 fclose($this->log);
-                $this->log = ob_get_clean();
+                $this->log = $this->redactSensitiveData(ob_get_clean());
             }
 
             if ($this->getResponseHttpCode() == 503 && $loop < 5) {
@@ -705,6 +705,20 @@ abstract class AbstractAPI implements Api
     }
 
     /**
+     * Remove credenciais do log verboso do curl antes de armazená-lo.
+     *
+     * @param string $log
+     *
+     * @return string
+     */
+    private function redactSensitiveData($log)
+    {
+        $log = preg_replace('/^([<>] )?(authorization|proxy-authorization|cookie|set-cookie|x-api-key|client_secret):\s*.*$/mi', '$1$2: [REDACTED]', (string) $log);
+
+        return preg_replace('/Bearer\s+[A-Za-z0-9._~+\/-]+=*/i', 'Bearer [REDACTED]', $log);
+    }
+
+    /**
      * @param $content
      *
      * @return false|string
@@ -713,6 +727,8 @@ abstract class AbstractAPI implements Api
     {
         $tmpFile = tempnam(sys_get_temp_dir(), 'certificate');
         $this->temps[] = $tmpFile;
+        // Material de certificado/chave nunca deve ser legível por outros usuários
+        chmod($tmpFile, 0600);
         file_put_contents($tmpFile, $content);
 
         return $tmpFile;

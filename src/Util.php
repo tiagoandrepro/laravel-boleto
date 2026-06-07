@@ -1342,11 +1342,25 @@ final class Util
      */
     public static function fetchPixLocation($location)
     {
+        if (! preg_match('/^https:\/\//i', $location)) {
+            $location = 'https://' . preg_replace('/^http:\/\//i', '', $location);
+        }
+
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($curl, CURLOPT_URL, $location);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, true);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 2);
+        curl_setopt($curl, CURLOPT_FOLLOWLOCATION, false);
+        curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 5);
+        curl_setopt($curl, CURLOPT_TIMEOUT, 10);
         $data = curl_exec($curl);
         curl_close($curl);
+
+        if (! is_string($data) || $data === '') {
+            return [];
+        }
+
         $datas = explode('.', $data);
         if (count($datas) !== 3) {
             return [];

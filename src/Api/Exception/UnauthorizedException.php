@@ -14,19 +14,13 @@ class UnauthorizedException extends BaseException
 
     private $certificadoChave;
 
-    /**
-     * @var null
-     */
-    private $certificadoSenha;
-
-    public function __construct($baseUrl, $conta, $certificado, $certificadoChave, $certificadoSenha = null)
+    public function __construct($baseUrl, $conta, $certificado, $certificadoChave)
     {
         parent::__construct('Unauthorized', 401);
         $this->baseUrl = $baseUrl;
         $this->conta = $conta;
         $this->certificado = $certificado;
         $this->certificadoChave = $certificadoChave;
-        $this->certificadoSenha = $certificadoSenha;
     }
 
     /**
@@ -105,26 +99,6 @@ class UnauthorizedException extends BaseException
     public function setCertificadoChave($certificadoChave)
     {
         $this->certificadoChave = $certificadoChave;
-
-        return $this;
-    }
-
-    /**
-     * @return null
-     */
-    public function getCertificadoSenha()
-    {
-        return $this->certificadoSenha;
-    }
-
-    /**
-     * @param null $certificadoSenha
-     *
-     * @return UnauthorizedException
-     */
-    public function setCertificadoSenha($certificadoSenha)
-    {
-        $this->certificadoSenha = $certificadoSenha;
 
         return $this;
     }

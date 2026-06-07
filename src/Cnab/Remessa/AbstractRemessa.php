@@ -576,8 +576,8 @@ abstract class AbstractRemessa
     public function save($path, $suggestName = false)
     {
         $folder = dirname($path);
-        if (! is_dir($folder)) {
-            mkdir($folder, 0777, true);
+        if (! is_dir($folder) && ! @mkdir($folder, 0755, true) && ! is_dir($folder)) {
+            throw new ValidationException('Não foi possível criar o diretório ' . $folder);
         }
 
         if (! is_writable(dirname($path))) {
@@ -614,6 +614,11 @@ abstract class AbstractRemessa
         if ($filename === null) {
             $filename = $this->nomeSugerido();
         }
+
+        // Evita header injection (CRLF) e path traversal no nome do arquivo
+        $filename = basename(str_replace(["\r", "\n", "\0"], '', $filename));
+        $filename = preg_replace('/[^A-Za-z0-9._-]/', '_', $filename) ?: 'remessa.txt';
+
         header('Content-type: text/plain');
         header('Content-Disposition: attachment; filename="' . $filename . '"');
         echo $this->gerar();
