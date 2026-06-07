@@ -7,17 +7,16 @@ use Illuminate\Support\Arr;
 use Eduardokum\LaravelBoleto\Util;
 use Eduardokum\LaravelBoleto\CalculoDV;
 use Eduardokum\LaravelBoleto\Boleto\AbstractBoleto;
-use Eduardokum\LaravelBoleto\Contracts\Boleto\BoletoAPI as BoletoContract;
 use Eduardokum\LaravelBoleto\Exception\ValidationException;
+use Eduardokum\LaravelBoleto\Contracts\Boleto\BoletoAPI as BoletoContract;
 
 class Sisprime extends AbstractBoleto implements BoletoContract
 {
-    
     /**
      * Código do banco
      * @var string
      */
-    protected $codigoBanco = "084";
+    protected $codigoBanco = '084';
 
     /**
      * Define as carteiras disponíveis para este banco
@@ -81,7 +80,7 @@ class Sisprime extends AbstractBoleto implements BoletoContract
      * @var string|null
      */
     protected $variacao_carteira = null;
-    
+
     /**
      * @return string
      */
@@ -89,7 +88,7 @@ class Sisprime extends AbstractBoleto implements BoletoContract
     {
         return $this->id;
     }
-    
+
     /**
      * Define o número da variação da carteira.
      *
@@ -124,9 +123,9 @@ class Sisprime extends AbstractBoleto implements BoletoContract
     protected function gerarNossoNumero()
     {
         $numero = Util::numberFormatGeral($this->getNumero(), 11);
-        return $numero . CalculoDV::sisprimeNossoNumero($this->getCarteira().$numero);
-    }
 
+        return $numero . CalculoDV::sisprimeNossoNumero($this->getCarteira() . $numero);
+    }
 
     /**
      * Método que retorna o nosso numero usado no boleto, formato XXXXXXXXXX-D. alguns bancos possuem algumas diferenças.
@@ -155,6 +154,7 @@ class Sisprime extends AbstractBoleto implements BoletoContract
         $campoLivre .= Util::numberFormatGeral($nossoNumero, 11); //Nosso Número (Sem o dígito verificador)
         $campoLivre .= Util::numberFormatGeral($this->getConta(), 7); //Conta do BENEFICIÁRIO (Sem o dígito verificador - Completar com zeros à esquerda quando necessário)
         $campoLivre .= '0';
+
         return $this->campoLivre = $campoLivre;
     }
 
@@ -187,7 +187,7 @@ class Sisprime extends AbstractBoleto implements BoletoContract
      */
     public function getAgenciaCodigoBeneficiario()
     {
-        return Util::numberFormatGeral($this->getAgencia(), 4) . '-'. $this->getAgenciaDv() . ' / ' . Util::numberFormatGeral($this->getConta(), 7) . '-' . $this->getContaDv();
+        return Util::numberFormatGeral($this->getAgencia(), 4) . '-' . $this->getAgenciaDv() . ' / ' . Util::numberFormatGeral($this->getConta(), 7) . '-' . $this->getContaDv();
     }
 
     /**
@@ -238,7 +238,7 @@ class Sisprime extends AbstractBoleto implements BoletoContract
         return $this->codigoCliente;
     }
 
-      /**
+    /**
      * Retorna a linha digitável do boleto
      *
      * @return string
@@ -249,8 +249,9 @@ class Sisprime extends AbstractBoleto implements BoletoContract
         if (! empty($this->campoLinhaDigitavel)) {
             return $this->campoLinhaDigitavel;
         }
-        
+
         $this->campoLinhaDigitavel = Util::formatLinhaDigitavel($this->codigoBarras2LinhaDigitavel($this->getCodigoBarras()));
+
         return $this->campoLinhaDigitavel;
     }
 
@@ -268,10 +269,11 @@ class Sisprime extends AbstractBoleto implements BoletoContract
         $parte4 = substr($codigo, 4, 1);
 
         $parte5 = substr($codigo, 5, 14);
-        
+
         return $parte1 . $parte2 . $parte3 . $parte4 . $parte5;
     }
-       /**
+
+    /**
      * Retorna o código de barras
      *
      * @return string
@@ -292,18 +294,19 @@ class Sisprime extends AbstractBoleto implements BoletoContract
             . Util::fatorVencimento($this->getDataVencimento())
             . Util::numberFormatGeral($this->getValor(), 10)
             . $this->getCampoLivre();
-        
+
         $resto = Util::modulo11($codigo, 2, 9, 1);
-        
+
         $resto = 11 - $resto;
-        
-        if($resto == 0 || $resto == 1 || $resto > 9){
-            $dv = 1;    
-        }else{
+
+        if ($resto == 0 || $resto == 1 || $resto > 9){
+            $dv = 1;
+        }else {
             $dv = $resto;
         }
-        
+
         $this->campoCodigoBarras = substr($codigo, 0, 4) . $dv . substr($codigo, 4);
+
         return $this->campoCodigoBarras;
     }
 
@@ -316,50 +319,50 @@ class Sisprime extends AbstractBoleto implements BoletoContract
     {
         $data = [
             'beneficiarioVariacaoCarteira' => $this->getVariacaoCarteira(),
-            'seuNumero'     => $this->getNumero(),
-            'valor'         => Util::nFloat($this->getValor(), 2, false),
-            'vencimento'    => $this->getDataVencimento()->format('Y-m-d'),
-            'nossoNumero'   => null,
-            'pagador' => [
+            'seuNumero'                    => $this->getNumero(),
+            'valor'                        => Util::nFloat($this->getValor(), 2, false),
+            'vencimento'                   => $this->getDataVencimento()->format('Y-m-d'),
+            'nossoNumero'                  => null,
+            'pagador'                      => [
                 'nomeRazaoSocial' => substr($this->getPagador()->getNome(), 0, 40),
                 'tipoPessoa'      => strlen(Util::onlyNumbers($this->getPagador()->getDocumento())) == 14 ? 'J' : 'F',
                 'numeroDocumento' => Util::onlyNumbers($this->getPagador()->getDocumento()),
                 'nomeFantasia'    => $this->getPagador()->getNomeFantasia(),
                 'email'           => $this->getPagador()->getEmail(),
-                'endereco' => [
+                'endereco'        => [
                     'logradouro' => $this->getPagador()->getEndereco(),
                     'bairro'     => $this->getPagador()->getBairro(),
                     'cidade'     => $this->getPagador()->getCidade(),
                     'uf'         => $this->getPagador()->getUf(),
-                    'cep'        => Util::onlyNumbers($this->getPagador()->getCep())
-                ]
+                    'cep'        => Util::onlyNumbers($this->getPagador()->getCep()),
+                ],
             ],
-            'mensagensFichaCompensacao' => array_filter(array_map(function($instrucao) {
+            'mensagensFichaCompensacao' => array_filter(array_map(function ($instrucao) {
                 return is_null($instrucao) ? null : trim($instrucao);
-            }, $this->getInstrucoes()))
+            }, $this->getInstrucoes())),
         ];
 
         if ($this->getDesconto()) {
             $data['desconto'] = [
-                'indicador' => '0',
+                'indicador'  => '0',
                 'dataLimite' => $this->getDataDesconto()->format('Y-m-d'),
-                'valor' => Util::nFloat($this->getDesconto()),
+                'valor'      => Util::nFloat($this->getDesconto()),
             ];
         }
 
         if ($this->getMulta()) {
             $data['multa'] = [
-                'indicador' => '0',
+                'indicador'  => '0',
                 'dataLimite' => ($this->getDataVencimento()->copy())->addDay()->format('Y-m-d'),
-                'valor' => Util::nFloat($this->getMulta()),
+                'valor'      => Util::nFloat($this->getMulta()),
             ];
         }
 
         if ($this->getJuros()) {
             $data['juros'] = [
-                'indicador' => '0',
+                'indicador'  => '0',
                 'dataLimite' => ($this->getDataVencimento()->copy())->addDays($this->getJurosApos() > 0 ? $this->getJurosApos() : 1)->format('Y-m-d'),
-                'valor' => Util::nFloat($this->getJuros()),
+                'valor'      => Util::nFloat($this->getJuros()),
             ];
         }
 
@@ -373,13 +376,13 @@ class Sisprime extends AbstractBoleto implements BoletoContract
      * @return BoletoContract
      * @throws \Exception
      */
-    public static function fromAPI($boleto, $appends=[])
+    public static function fromAPI($boleto, $appends = [])
     {
-        if(!array_key_exists('beneficiario', $appends)) {
+        if (! array_key_exists('beneficiario', $appends)) {
             throw new \Exception('Informe o beneficiario');
         }
 
-        if(!array_key_exists('conta', $appends)) {
+        if (! array_key_exists('conta', $appends)) {
             throw new \Exception('Informe a conta');
         }
 
@@ -396,14 +399,14 @@ class Sisprime extends AbstractBoleto implements BoletoContract
         $dateUS = preg_match('/[0-9]{4}-[0-9]{2}-[0-9]{2}.*/', $boleto->dataDeVencimento);
 
         return new static(array_merge(array_filter([
-            'nossoNumero'       => $boleto->nossoNumero,
-            'dataSituacao'      => Carbon::now(),
-            'valorRecebido'     => $boleto->valor,
-            'situacao'          => Arr::get($aSituacao, $boleto->status, $boleto->status),
-            'dataVencimento'    => Carbon::createFromFormat($dateUS ? 'Y-m-d' : 'd/m/Y', $boleto->dataDeVencimento),
-            'valor'             => $boleto->valor,
-            'carteira'          => isset($ipte['campo_livre_parsed']['carteira']) ? $ipte['campo_livre_parsed']['carteira'] : '9',
-            'operacao'          => isset($ipte['campo_livre_parsed']['convenio']) ? $ipte['campo_livre_parsed']['convenio'] : null,
+            'nossoNumero'    => $boleto->nossoNumero,
+            'dataSituacao'   => Carbon::now(),
+            'valorRecebido'  => $boleto->valor,
+            'situacao'       => Arr::get($aSituacao, $boleto->status, $boleto->status),
+            'dataVencimento' => Carbon::createFromFormat($dateUS ? 'Y-m-d' : 'd/m/Y', $boleto->dataDeVencimento),
+            'valor'          => $boleto->valor,
+            'carteira'       => isset($ipte['campo_livre_parsed']['carteira']) ? $ipte['campo_livre_parsed']['carteira'] : '9',
+            'operacao'       => isset($ipte['campo_livre_parsed']['convenio']) ? $ipte['campo_livre_parsed']['convenio'] : null,
         ]), $appends));
     }
 

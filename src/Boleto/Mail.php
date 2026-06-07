@@ -3,8 +3,6 @@
 namespace Eduardokum\LaravelBoleto\Boleto;
 
 use Throwable;
-use Swift_Mailer;
-use Swift_SmtpTransport;
 use Illuminate\Support\Arr;
 use Illuminate\Mail\Message;
 use Illuminate\Config\Repository;
@@ -18,9 +16,7 @@ use Eduardokum\LaravelBoleto\Contracts\Boleto\Boleto;
 use Illuminate\Contracts\Mail\Factory as MailFactory;
 use Illuminate\Contracts\View\Factory as ViewFactory;
 use Eduardokum\LaravelBoleto\Exception\ValidationException;
-use Eduardokum\LaravelMailAutoEmbed\Listeners\SwiftEmbedImages;
 use Symfony\Component\Mailer\Transport\Smtp\EsmtpTransportFactory;
-use Eduardokum\LaravelMailAutoEmbed\Contracts\Listeners\EmbedImages;
 
 class Mail
 {
@@ -182,33 +178,16 @@ class Mail
             }
 
             $this->setFrom($config['from']);
-            if (LaravelBoletoMailer::isLaravel9Plus()) {
-                $factory = new EsmtpTransportFactory();
-                $transport = $factory->create(new Dsn(
-                    $scheme,
-                    $config['host'],
-                    $config['username'] ?? null,
-                    $config['password'] ?? null,
-                    ((int) $config['port']) ?? null,
-                    $config
-                ));
-                $this->mailer = new LaravelBoletoMailer('default', $this->view, $transport);
-            } else {
-                $transport = new Swift_SmtpTransport(
-                    $config['host'],
-                    $config['port']
-                );
-
-                if (! empty($config['encryption'])) {
-                    $transport->setEncryption($config['encryption']);
-                }
-                if (isset($config['username'])) {
-                    $transport->setUsername($config['username']);
-
-                    $transport->setPassword($config['password']);
-                }
-                $this->mailer = new LaravelBoletoMailer('default', $this->view, new Swift_Mailer($transport));
-            }
+            $factory = new EsmtpTransportFactory();
+            $transport = $factory->create(new Dsn(
+                $scheme,
+                $config['host'],
+                $config['username'] ?? null,
+                $config['password'] ?? null,
+                (int) $config['port'],
+                $config
+            ));
+            $this->mailer = new LaravelBoletoMailer('default', $this->view, $transport);
         }
     }
 
@@ -334,7 +313,7 @@ class Mail
      * @return bool
      * @throws ValidationException
      */
-    public function send($template, $subject, Boleto $boleto = null, $to = null)
+    public function send($template, $subject, ?Boleto $boleto = null, $to = null)
     {
         if ($to) {
             $this->setTo($to);
@@ -353,28 +332,14 @@ class Mail
         try {
             $html = $this->build($template);
 
-            if (! LaravelBoletoMailer::isLaravel9Plus() && ! app()->bound(EmbedImages::class)) {
-                $this->getMailer()->getSwiftMailer()->registerPlugin(new SwiftEmbedImages(config()->get('mail-auto-embed')));
-            }
-
             $this->getMailer()->html($html, function (Message $message) use ($subject) {
-                if (LaravelBoletoMailer::isLaravel9Plus()) {
-                    $message
-                        ->attachData($this->getPdf(), 'boleto.pdf', [
-                            'mime' => 'application/pdf',
-                        ])
-                        ->from($this->getFrom()['address'], $this->getFrom()['name'])
-                        ->subject($subject)
-                        ->to($this->getTo()['address'], $this->getTo()['name']);
-                } else {
-                    $message
-                        ->attachData($this->getPdf(), 'boleto.pdf', [
-                            'mime' => 'application/pdf',
-                        ])
-                        ->setFrom($this->getFrom()['address'], $this->getFrom()['name'])
-                        ->setSubject($subject)
-                        ->setTo($this->getTo()['address'], $this->getTo()['name']);
-                }
+                $message
+                    ->attachData($this->getPdf(), 'boleto.pdf', [
+                        'mime' => 'application/pdf',
+                    ])
+                    ->from($this->getFrom()['address'], $this->getFrom()['name'])
+                    ->subject($subject)
+                    ->to($this->getTo()['address'], $this->getTo()['name']);
             });
 
             return true;

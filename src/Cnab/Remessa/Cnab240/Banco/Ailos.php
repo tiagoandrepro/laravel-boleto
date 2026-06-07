@@ -82,6 +82,7 @@ class Ailos extends AbstractRemessa implements RemessaContract
     public function setCarteira($carteira)
     {
         $this->carteira = 1;
+
         return $this;
     }
 
@@ -165,6 +166,7 @@ class Ailos extends AbstractRemessa implements RemessaContract
         $this->segmentoP($boleto);
         $this->segmentoQ($boleto);
         $this->segmentoR($boleto);
+
         return $this;
     }
 
@@ -247,7 +249,7 @@ class Ailos extends AbstractRemessa implements RemessaContract
      */
     protected function segmentoR(BoletoContract $boleto)
     {
-        if (!$boleto->getMulta() > 0 && !$boleto->getDesconto() > 0) {
+        if (! $boleto->getMulta() > 0 && ! $boleto->getDesconto() > 0) {
             return $this;
         }
 
@@ -397,7 +399,6 @@ class Ailos extends AbstractRemessa implements RemessaContract
         $this->add(172, 191, '');
         $this->add(192, 211, '');
         $this->add(212, 240, '');
-
 
         return $this;
     }

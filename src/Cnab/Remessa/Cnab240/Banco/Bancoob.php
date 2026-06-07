@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by Guilherme Couto.
  * User: guicouto
@@ -352,7 +353,7 @@ class Bancoob extends AbstractRemessa implements RemessaContract
     {
         $this->iniciaTrailerLote();
 
-        $valor = array_reduce($this->boletos, function($valor, $boleto) {
+        $valor = array_reduce($this->boletos, function ($valor, $boleto) {
             return $valor + $boleto->getValor();
         }, 0);
 

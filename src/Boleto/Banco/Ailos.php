@@ -2,10 +2,10 @@
 
 namespace Eduardokum\LaravelBoleto\Boleto\Banco;
 
-use Eduardokum\LaravelBoleto\Boleto\AbstractBoleto;
-use Eduardokum\LaravelBoleto\Contracts\Boleto\Boleto as BoletoContract;
-use Eduardokum\LaravelBoleto\Exception\ValidationException;
 use Eduardokum\LaravelBoleto\Util;
+use Eduardokum\LaravelBoleto\Boleto\AbstractBoleto;
+use Eduardokum\LaravelBoleto\Exception\ValidationException;
+use Eduardokum\LaravelBoleto\Contracts\Boleto\Boleto as BoletoContract;
 
 class Ailos extends AbstractBoleto implements BoletoContract
 {
@@ -21,18 +21,21 @@ class Ailos extends AbstractBoleto implements BoletoContract
      * @var string
      */
     protected $localPagamento = 'Pagável preferencialmente nas cooperativas do Sistema AILOS';
+
     /**
      * Código do banco
      *
      * @var string
      */
     protected $codigoBanco = self::COD_BANCO_AILOS;
+
     /**
      * Define as carteiras disponíveis para este banco
      *
      * @var array
      */
     protected $carteiras = ['1'];
+
     /**
      * Espécie do documento, coódigo para remessa
      *
@@ -42,6 +45,7 @@ class Ailos extends AbstractBoleto implements BoletoContract
         'DM' => '02', // Duplicata Mercantil por Indicação
         'DS' => '04', // Duplicata Serviço por Indicação
     ];
+
     /**
      * Se possui registro o boleto (tipo = 1 com registro e 3 sem registro)
      *
@@ -65,8 +69,10 @@ class Ailos extends AbstractBoleto implements BoletoContract
     public function setComRegistro($registro)
     {
         $this->registro = $registro;
+
         return $this;
     }
+
     /**
      * Retorna se é com registro.
      *
@@ -76,6 +82,7 @@ class Ailos extends AbstractBoleto implements BoletoContract
     {
         return $this->registro;
     }
+
     /**
      * Seta o codigo do cliente.
      *
@@ -89,6 +96,7 @@ class Ailos extends AbstractBoleto implements BoletoContract
 
         return $this;
     }
+
     /**
      * Retorna o codigo do cliente.
      *
@@ -98,6 +106,7 @@ class Ailos extends AbstractBoleto implements BoletoContract
     {
         return $this->convenio;
     }
+
     /**
      * Retorna o campo Agência/Beneficiário do boleto
      *
@@ -108,7 +117,7 @@ class Ailos extends AbstractBoleto implements BoletoContract
         $conta = $this->getConta();
         $contaDV = $this->getContaDv();
 
-        if (!empty($contaDV) || $contaDV == '0') {
+        if (! empty($contaDV) || $contaDV == '0') {
             $conta .= '-' . $contaDV;
         }
 
@@ -116,6 +125,7 @@ class Ailos extends AbstractBoleto implements BoletoContract
 
         return $agenciaDV . '/' . $conta;
     }
+
     /**
      * Gera o Nosso Número.
      *
@@ -126,8 +136,10 @@ class Ailos extends AbstractBoleto implements BoletoContract
         $conta = Util::numberFormatGeral($this->getConta() . $this->getContaDv(), 8);
         $numero_boleto = Util::numberFormatGeral($this->getNumero(), 9);
         $nossoNumero = $conta . $numero_boleto;
+
         return $nossoNumero;
     }
+
     /**
      * Método que retorna o nosso numero usado no boleto. alguns bancos possuem algumas diferenças.
      *
@@ -137,6 +149,7 @@ class Ailos extends AbstractBoleto implements BoletoContract
     {
         return $this->getNossoNumero();
     }
+
     /**
      * Método para gerar o código da posição de 20 a 44
      *
@@ -166,15 +179,15 @@ class Ailos extends AbstractBoleto implements BoletoContract
     public static function parseCampoLivre($campoLivre)
     {
         return [
-            'agenciaDv' => null,
+            'agenciaDv'       => null,
             'contaCorrenteDv' => null,
-            'convenio' => substr($campoLivre, 20, 6),
-            'carteira' => substr($campoLivre, -2),
-            'nossoNumero' => substr($campoLivre, 26, 17),
-            'nossoNumeroDv' => null,
+            'convenio'        => substr($campoLivre, 20, 6),
+            'carteira'        => substr($campoLivre, -2),
+            'nossoNumero'     => substr($campoLivre, 26, 17),
+            'nossoNumeroDv'   => null,
             'nossoNumeroFull' => substr($campoLivre, 26, 17),
-            'agencia' => null,
-            'contaCorrente' => substr($campoLivre, 26, 8),
+            'agencia'         => null,
+            'contaCorrente'   => substr($campoLivre, 26, 8),
         ];
     }
 }

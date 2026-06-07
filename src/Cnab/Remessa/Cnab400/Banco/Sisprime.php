@@ -8,7 +8,6 @@ use Eduardokum\LaravelBoleto\Exception\ValidationException;
 use Eduardokum\LaravelBoleto\Cnab\Remessa\Cnab400\AbstractRemessa;
 use Eduardokum\LaravelBoleto\Contracts\Boleto\Boleto as BoletoContract;
 use Eduardokum\LaravelBoleto\Contracts\Cnab\Remessa as RemessaContract;
-use Illuminate\Support\Facades\Log;
 
 class Sisprime extends AbstractRemessa implements RemessaContract
 {
@@ -36,7 +35,7 @@ class Sisprime extends AbstractRemessa implements RemessaContract
     const INSTRUCAO_PROTESTAR_DIAS_CORRIDOS = '1';
     const INSTRUCAO_PROTESTAR_DIAS_UTEIS = '2';
     const INSTRUCAO_NAO_PROTESTAR = '3';
-    
+
     public function __construct(array $params = [])
     {
         parent::__construct($params);
@@ -149,24 +148,24 @@ class Sisprime extends AbstractRemessa implements RemessaContract
         $this->iniciaDetalhe();
 
         $this->add(1, 1, '1');
-        $this->add(2, 20, Util::formatCnab('9','0', 19));
+        $this->add(2, 20, Util::formatCnab('9', '0', 19));
 
         $this->add(21, 21, '0');
         $this->add(22, 24, Util::formatCnab('9', $boleto->getCarteira(), 3));
         $this->add(25, 29, Util::formatCnab('9', $boleto->getAgencia(), 5));
-        $this->add(30, 37, Util::formatCnab('9', $boleto->getConta().$boleto->getContaDv(), 8));
+        $this->add(30, 37, Util::formatCnab('9', $boleto->getConta() . $boleto->getContaDv(), 8));
 
         $this->add(38, 62, Util::formatCnab('A', $boleto->getNumeroControle(), 25));
         $this->add(63, 65, $this->getCodigoBanco());
-        $this->add(66,66, $boleto->getMulta() > 0 ? '2' : '0'); // se 2 considerar perc multa, se zero desconsidera multa 
-        $this->add(67,70, Util::formatCnab('9', $boleto->getMulta(), 3));
+        $this->add(66, 66, $boleto->getMulta() > 0 ? '2' : '0'); // se 2 considerar perc multa, se zero desconsidera multa
+        $this->add(67, 70, Util::formatCnab('9', $boleto->getMulta(), 3));
         $this->add(71, 81, Util::formatCnab('9', $boleto->getNossoNumero(), 11));
-        $this->add(82, 82, CalculoDV::sisprimeNossoNumero($boleto->getCarteira().$boleto->getNumero()));
-        
+        $this->add(82, 82, CalculoDV::sisprimeNossoNumero($boleto->getCarteira() . $boleto->getNumero()));
+
         $this->add(83, 92, Util::formatCnab('9', 0, 10));
         $this->add(93, 93, 2);
-        $this->add(94, 108, Util::formatCnab('A','0', 15));
-        
+        $this->add(94, 108, Util::formatCnab('A', '0', 15));
+
         $this->add(109, 110, self::OCORRENCIA_REMESSA); // REGISTRO
         if ($boleto->getStatus() == $boleto::STATUS_BAIXA) {
             $this->add(109, 110, self::OCORRENCIA_PEDIDO_BAIXA); // BAIXA
@@ -180,7 +179,6 @@ class Sisprime extends AbstractRemessa implements RemessaContract
         if ($boleto->getStatus() == $boleto::STATUS_CUSTOM) {
             $this->add(109, 110, sprintf('%2.02s', $boleto->getComando()));
         }
-        
 
         $this->add(111, 120, Util::formatCnab('X', $boleto->getNumeroDocumento(), 10));
         $this->add(121, 126, $boleto->getDataVencimento()->format('dmy')); //DDMMAA

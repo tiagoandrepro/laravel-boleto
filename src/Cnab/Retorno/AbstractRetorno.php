@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: Eduardo
@@ -252,37 +253,37 @@ abstract class AbstractRetorno implements Countable, SeekableIterator
         return Util::remove($i, $f, $array);
     }
 
-    public function current()
+    public function current(): mixed
     {
         return $this->detalhe[$this->_position];
     }
 
-    public function next()
+    public function next(): void
     {
         $this->_position++;
     }
 
-    public function key()
+    public function key(): mixed
     {
         return $this->_position;
     }
 
-    public function valid()
+    public function valid(): bool
     {
         return isset($this->detalhe[$this->_position]);
     }
 
-    public function rewind()
+    public function rewind(): void
     {
         $this->_position = 1;
     }
 
-    public function count()
+    public function count(): int
     {
         return count($this->detalhe);
     }
 
-    public function seek($offset)
+    public function seek($offset): void
     {
         $this->_position = $offset;
         if (! $this->valid()) {

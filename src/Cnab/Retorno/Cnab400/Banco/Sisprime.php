@@ -303,7 +303,7 @@ class Sisprime extends AbstractRetorno implements RetornoCnab400
             ->setValorDesconto(Util::nFloat($this->rem(241, 253, $detalhe) / 100, 2, false))
             ->setValorRecebido(Util::nFloat($this->rem(254, 266, $detalhe) / 100, 2, false))
             ->setValorMora(Util::nFloat($this->rem(267, 279, $detalhe) / 100, 2, false))
-            ->setValorMulta(Util::nFloat($this->rem(202, 214, $detalhe)/100, 2, false))
+            ->setValorMulta(Util::nFloat($this->rem(202, 214, $detalhe) / 100, 2, false))
             ->setValorOutrasDespesas(0);
 
         //Adicionar array_fill para garantir que array tenha 5 casas

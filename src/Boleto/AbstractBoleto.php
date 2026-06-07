@@ -2024,13 +2024,9 @@ abstract class AbstractBoleto implements BoletoContract
 
         $options = new QROptions;
 
-        if (defined('\chillerlan\QRCode\QRCode::OUTPUT_IMAGE_PNG')) {
-            $options->outputType = QRCode::OUTPUT_IMAGE_PNG;
-            $options->eccLevel = QRCode::ECC_L;
-        } else {
-            $options->outputType = QROutputInterface::GDIMAGE_PNG;
-            $options->addQuietzone = true;
-        }
+        // chillerlan/php-qrcode ^5.0
+        $options->outputType = QROutputInterface::GDIMAGE_PNG;
+        $options->addQuietzone = true;
 
         $options->scale = 20;
         $options->quietzoneSize = 1;

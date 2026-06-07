@@ -30,10 +30,10 @@ class Inter extends AbstractWebhook
             $boleto->setMotivo(Arr::get($item, 'motivoCancelamento'));
             $boleto->setOcorrenciaTipo(
                 match (Arr::get($item, 'situacao')) {
-                    'A_RECEBER' => Boleto::OCORRENCIA_ENTRADA,
+                    'A_RECEBER'                            => Boleto::OCORRENCIA_ENTRADA,
                     'PAGO', 'MARCADO_RECEBIDO', 'RECEBIDO' => Boleto::OCORRENCIA_LIQUIDADA,
-                    'CANCELADO', 'EXPIRADO' => Boleto::OCORRENCIA_BAIXADA,
-                    default => Boleto::OCORRENCIA_OUTROS,
+                    'CANCELADO', 'EXPIRADO'                => Boleto::OCORRENCIA_BAIXADA,
+                    default                                => Boleto::OCORRENCIA_OUTROS,
                 }
             );
             $boleto->setOcorrenciaOrigem(

@@ -83,6 +83,7 @@ class Unicred extends AbstractBoleto implements BoletoContract
      * Tipo de Juros
      */
     const TIPO_JURO_VALOR_DIARIO = '1';
+
     const TIPO_JURO_TAXA_DIARIA = '2';
     const TIPO_JURO_TAXA_MENSAL = '3';
     const TIPO_JURO_ISENTO = '5';
@@ -101,15 +102,16 @@ class Unicred extends AbstractBoleto implements BoletoContract
      */
     protected $tipoJurosValidos = [
         'VALOR_DIARIO' => self::TIPO_JURO_VALOR_DIARIO,
-        'TAXA_DIARIA' => self::TIPO_JURO_TAXA_DIARIA,
-        'TAXA_MENSAL' => self::TIPO_JURO_TAXA_MENSAL,
-        'ISENTO' => self::TIPO_JURO_ISENTO,
+        'TAXA_DIARIA'  => self::TIPO_JURO_TAXA_DIARIA,
+        'TAXA_MENSAL'  => self::TIPO_JURO_TAXA_MENSAL,
+        'ISENTO'       => self::TIPO_JURO_ISENTO,
     ];
 
     /**
      * Tipo de Multa
      */
     const TIPO_MULTA_VALOR_FIXO = '1';
+
     const TIPO_MULTA_TAXA = '2';
     const TIPO_MULTA_ISENTO = '3';
 
@@ -126,9 +128,9 @@ class Unicred extends AbstractBoleto implements BoletoContract
      * @var array<int>
      */
     protected $tipoMultasValidos = [
-        'ISENTO' => self::TIPO_MULTA_ISENTO,
+        'ISENTO'     => self::TIPO_MULTA_ISENTO,
         'VALOR_FIXO' => self::TIPO_MULTA_VALOR_FIXO,
-        'TAXA' => self::TIPO_MULTA_TAXA
+        'TAXA'       => self::TIPO_MULTA_TAXA,
     ];
 
     /**
@@ -139,8 +141,8 @@ class Unicred extends AbstractBoleto implements BoletoContract
      */
     public function setTipoJuro($tipoJuro)
     {
-        if(!isset($this->tipoJurosValidos[$tipoJuro])) {
-            throw new \Exception("Tipo de juro não disponível!");
+        if (! isset($this->tipoJurosValidos[$tipoJuro])) {
+            throw new \Exception('Tipo de juro não disponível!');
         }
 
         $this->tipoJuro = $this->tipoJurosValidos[$tipoJuro];
@@ -166,8 +168,8 @@ class Unicred extends AbstractBoleto implements BoletoContract
      */
     public function setTipoMulta($tipoMulta)
     {
-        if(!isset($this->tipoMultasValidos[$tipoMulta])) {
-            throw new \Exception("Tipo de multa não disponível!");
+        if (! isset($this->tipoMultasValidos[$tipoMulta])) {
+            throw new \Exception('Tipo de multa não disponível!');
         }
 
         $this->tipoMulta = $this->tipoMultasValidos[$tipoMulta];
@@ -340,50 +342,50 @@ class Unicred extends AbstractBoleto implements BoletoContract
     {
         $data = [
             'beneficiarioVariacaoCarteira' => $this->getVariacaoCarteira(),
-            'seuNumero'     => $this->getNumero(),
-            'valor'         => Util::nFloat($this->getValor(), 2, false),
-            'vencimento'    => $this->getDataVencimento()->format('Y-m-d'),
-            'nossoNumero'   => null,
-            'pagador' => [
+            'seuNumero'                    => $this->getNumero(),
+            'valor'                        => Util::nFloat($this->getValor(), 2, false),
+            'vencimento'                   => $this->getDataVencimento()->format('Y-m-d'),
+            'nossoNumero'                  => null,
+            'pagador'                      => [
                 'nomeRazaoSocial' => substr($this->getPagador()->getNome(), 0, 40),
                 'tipoPessoa'      => strlen(Util::onlyNumbers($this->getPagador()->getDocumento())) == 14 ? 'J' : 'F',
                 'numeroDocumento' => Util::onlyNumbers($this->getPagador()->getDocumento()),
                 'nomeFantasia'    => $this->getPagador()->getNomeFantasia(),
                 'email'           => $this->getPagador()->getEmail(),
-                'endereco' => [
+                'endereco'        => [
                     'logradouro' => $this->getPagador()->getEndereco(),
                     'bairro'     => $this->getPagador()->getBairro(),
                     'cidade'     => $this->getPagador()->getCidade(),
                     'uf'         => $this->getPagador()->getUf(),
-                    'cep'        => Util::onlyNumbers($this->getPagador()->getCep())
-                ]
+                    'cep'        => Util::onlyNumbers($this->getPagador()->getCep()),
+                ],
             ],
-            'mensagensFichaCompensacao' => array_filter(array_map(function($instrucao) {
+            'mensagensFichaCompensacao' => array_filter(array_map(function ($instrucao) {
                 return is_null($instrucao) ? null : trim($instrucao);
-            }, $this->getInstrucoes()))
+            }, $this->getInstrucoes())),
         ];
 
         if ($this->getDesconto()) {
             $data['desconto'] = [
-                'indicador' => '0',
+                'indicador'  => '0',
                 'dataLimite' => $this->getDataDesconto()->format('Y-m-d'),
-                'valor' => Util::nFloat($this->getDesconto()),
+                'valor'      => Util::nFloat($this->getDesconto()),
             ];
         }
 
         if ($this->getMulta()) {
             $data['multa'] = [
-                'codigo' => $this->getTipoMulta(),
+                'codigo'     => $this->getTipoMulta(),
                 'dataInicio' => ($this->getDataVencimento()->copy())->addDay()->format('Y-m-d'),
-                'valor' => Util::nFloat($this->getMulta()),
+                'valor'      => Util::nFloat($this->getMulta()),
             ];
         }
 
         if ($this->getJuros()) {
             $data['juros'] = [
-                'codigo' => $this->getTipoJuro(),
+                'codigo'     => $this->getTipoJuro(),
                 'dataInicio' => ($this->getDataVencimento()->copy())->addDays($this->getJurosApos() > 0 ? $this->getJurosApos() : 1)->format('Y-m-d'),
-                'valor' => Util::nFloat($this->getJuros()),
+                'valor'      => Util::nFloat($this->getJuros()),
             ];
         }
 
@@ -397,13 +399,13 @@ class Unicred extends AbstractBoleto implements BoletoContract
      * @return BoletoContract
      * @throws \Exception
      */
-    public static function fromAPI($boleto, $appends=[])
+    public static function fromAPI($boleto, $appends = [])
     {
-        if(!array_key_exists('beneficiario', $appends)) {
+        if (! array_key_exists('beneficiario', $appends)) {
             throw new \Exception('Informe o beneficiario');
         }
 
-        if(!array_key_exists('conta', $appends)) {
+        if (! array_key_exists('conta', $appends)) {
             throw new \Exception('Informe a conta');
         }
 
@@ -420,14 +422,14 @@ class Unicred extends AbstractBoleto implements BoletoContract
         $dateUS = preg_match('/[0-9]{4}-[0-9]{2}-[0-9]{2}.*/', $boleto->dataDeVencimento);
 
         return new static(array_merge(array_filter([
-            'nossoNumero'       => $boleto->nossoNumero,
-            'dataSituacao'      => Carbon::now(),
-            'valorRecebido'     => $boleto->valor,
-            'situacao'          => Arr::get($aSituacao, $boleto->status, $boleto->status),
-            'dataVencimento'    => Carbon::createFromFormat($dateUS ? 'Y-m-d' : 'd/m/Y', $boleto->dataDeVencimento),
-            'valor'             => $boleto->valor,
-            'carteira'          => isset($ipte['campo_livre_parsed']['carteira']) ? $ipte['campo_livre_parsed']['carteira'] : '21',
-            'operacao'          => isset($ipte['campo_livre_parsed']['convenio']) ? $ipte['campo_livre_parsed']['convenio'] : null,
+            'nossoNumero'    => $boleto->nossoNumero,
+            'dataSituacao'   => Carbon::now(),
+            'valorRecebido'  => $boleto->valor,
+            'situacao'       => Arr::get($aSituacao, $boleto->status, $boleto->status),
+            'dataVencimento' => Carbon::createFromFormat($dateUS ? 'Y-m-d' : 'd/m/Y', $boleto->dataDeVencimento),
+            'valor'          => $boleto->valor,
+            'carteira'       => isset($ipte['campo_livre_parsed']['carteira']) ? $ipte['campo_livre_parsed']['carteira'] : '21',
+            'operacao'       => isset($ipte['campo_livre_parsed']['convenio']) ? $ipte['campo_livre_parsed']['convenio'] : null,
         ]), $appends));
     }
 
