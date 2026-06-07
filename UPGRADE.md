@@ -5,6 +5,7 @@
 | | Antes | Agora |
 |---|---|---|
 | PHP | > 5.5 | **^8.2** (Laravel 13 exige 8.3+) |
+| ext-gd | implícito | **declarado** (QR Code PIX com php-qrcode ^5) |
 | Laravel | 6–12 | **10, 11, 12 ou 13** |
 | chillerlan/php-qrcode | ^3\|^4\|^5 | **^5.0** |
 | eduardokum/laravel-mail-auto-embed | dev-master | **^2.13** |
@@ -34,8 +35,9 @@ Métodos de iteração ganharam tipos de retorno nativos (`current(): mixed`,
 adicione as mesmas assinaturas.
 
 ### UnauthorizedException
-Não armazena mais a senha do certificado (vazava em logs).
-`getCertificadoSenha()`/`setCertificadoSenha()` removidos.
+Não armazena mais certificado, chave nem senha (material PEM vazava quando a
+exception era serializada por handlers de erro). Construtor agora é
+`($baseUrl, $conta)`; `getCertificado*()`/`setCertificado*()` removidos.
 
 ### Util::file2array()
 Lança `ValidationException` quando recebe um caminho de arquivo ilegível
@@ -50,8 +52,10 @@ Inter passa a funcionar com headers.
 ### AbstractRemessa
 - `save()`: cria diretórios com permissão `0755` (antes `0777`) e lança
   exceção quando o `mkdir` falha.
-- `download()`: o nome do arquivo é sanitizado (CRLF/path traversal);
-  caracteres fora de `[A-Za-z0-9._-]` viram `_`.
+- `download()`: o nome do arquivo é sanitizado via novo
+  `Util::sanitizeFilename()` (CRLF/path traversal); caracteres fora de
+  `[A-Za-z0-9._-]` viram `_`. O mesmo vale para o nome do PDF em
+  `Pdf::gerarBoleto()` com `OUTPUT_DOWNLOAD`/`OUTPUT_STANDARD`.
 
 ## Mudanças de comportamento (não-breaking)
 

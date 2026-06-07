@@ -39,7 +39,7 @@ jobs:
         runs-on: ${{ matrix.os }}
         name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.dependency-version }} - ${{ matrix.os }}
         env:
-            extensions: intl, json, mbstring, dom, curl, openssl
+            extensions: intl, json, mbstring, dom, curl, openssl, gd
 
         steps:
             -   name: Checkout
@@ -64,6 +64,7 @@ jobs:
                 with:
                     php-version: ${{ matrix.php }}
                     extensions: ${{ env.extensions }}
+                    coverage: none
                     tools: composer
                 env:
                     COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -75,4 +76,4 @@ jobs:
 
             -   name: Run tests
                 run: |
-                    vendor/bin/phpunit -c phpunit.xml --coverage-clover=coverage.clover
+                    vendor/bin/phpunit -c phpunit.xml

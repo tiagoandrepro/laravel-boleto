@@ -269,9 +269,7 @@ class CalculoDV
         $dv = Util::modulo11($nossoNumero, 2, 7, 1);
         if ($dv == 1) {
             $dv = 'P';
-        } elseif ($dv == 0) {
-            $dv = 0;
-        } else {
+        } elseif ($dv != 0) {
             $dv = 11 - $dv;
         }
 

@@ -401,10 +401,13 @@ final class Util
     }
 
     /**
-     * Arredondamento canônico de valores monetários (2 casas).
-     * Toda aritmética de dinheiro (juros, multa, proração) deve passar por
-     * aqui antes de ser exibida ou gravada em CNAB/código de barras, para
-     * que o arredondamento aconteça uma única vez e de forma consistente.
+     * Arredondamento de valores monetários (2 casas) para cálculos
+     * intermediários expostos em getters (ex.: proração de juros).
+     *
+     * Atenção: campos de largura fixa de CNAB/código de barras NÃO passam
+     * por aqui — eles são formatados por formatCnab()/nFloat(), que
+     * retornam string e preservam os zeros à direita. Use moneyRound apenas
+     * quando o resultado é um float de cálculo, nunca para formatação.
      *
      * @param float|string $value
      * @param int $decimals
@@ -414,6 +417,25 @@ final class Util
     public static function moneyRound($value, $decimals = 2)
     {
         return round((float) $value, $decimals);
+    }
+
+    /**
+     * Sanitiza um nome de arquivo para uso em Content-Disposition e em
+     * gravação em disco: remove CR/LF/NUL (header injection), separadores
+     * de diretório (path traversal) e restringe a [A-Za-z0-9._-].
+     *
+     * @param string $filename
+     * @param string $default usado quando a sanitização esvazia o nome
+     *
+     * @return string
+     */
+    public static function sanitizeFilename($filename, $default = 'arquivo')
+    {
+        $filename = basename(str_replace(["\r", "\n", "\0"], '', (string) $filename));
+        $filename = preg_replace('/[^A-Za-z0-9._-]/', '_', $filename);
+
+        // Nomes degenerados ('', '.', '..', só pontuação) caem no default
+        return preg_match('/[A-Za-z0-9]/', (string) $filename) ? $filename : $default;
     }
 
     /**
@@ -548,7 +570,10 @@ final class Util
         // Base FEBRABAN ancorada no MESMO fuso da data para que a diferença
         // seja puramente de calendário (evita off-by-one entre timezones/DST)
         $base = Carbon::create(1997, 10, 7, 0, 0, 0, $date->getTimezone());
-        $fator = (int) abs($base->diffInDays($date));
+        // round() defensivo: o diff de startOfDay no mesmo TZ é sempre
+        // inteiro, mas truncar ((int)) converteria um eventual 0.9999
+        // de borda em off-by-one silencioso no código de barras
+        $fator = (int) round(abs($base->diffInDays($date)));
         $limit = $fator % 9000;
         if ($limit >= 1000) {
             return $limit;

@@ -4,23 +4,22 @@ namespace Eduardokum\LaravelBoleto\Api\Exception;
 
 use Eduardokum\LaravelBoleto\Exception\BaseException;
 
+/**
+ * Não armazena certificado, chave nem senha: esses valores podem conter
+ * material PEM sensível e exceptions são rotineiramente serializadas por
+ * handlers de erro (Sentry, logs estruturados).
+ */
 class UnauthorizedException extends BaseException
 {
     private $baseUrl;
 
     private $conta;
 
-    private $certificado;
-
-    private $certificadoChave;
-
-    public function __construct($baseUrl, $conta, $certificado, $certificadoChave)
+    public function __construct($baseUrl, $conta)
     {
         parent::__construct('Unauthorized', 401);
         $this->baseUrl = $baseUrl;
         $this->conta = $conta;
-        $this->certificado = $certificado;
-        $this->certificadoChave = $certificadoChave;
     }
 
     /**
@@ -59,46 +58,6 @@ class UnauthorizedException extends BaseException
     public function setConta($conta)
     {
         $this->conta = $conta;
-
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCertificado()
-    {
-        return $this->certificado;
-    }
-
-    /**
-     * @param mixed $certificado
-     *
-     * @return UnauthorizedException
-     */
-    public function setCertificado($certificado)
-    {
-        $this->certificado = $certificado;
-
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCertificadoChave()
-    {
-        return $this->certificadoChave;
-    }
-
-    /**
-     * @param mixed $certificadoChave
-     *
-     * @return UnauthorizedException
-     */
-    public function setCertificadoChave($certificadoChave)
-    {
-        $this->certificadoChave = $certificadoChave;
 
         return $this;
     }

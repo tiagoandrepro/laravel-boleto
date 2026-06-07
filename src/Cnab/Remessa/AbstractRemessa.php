@@ -616,8 +616,7 @@ abstract class AbstractRemessa
         }
 
         // Evita header injection (CRLF) e path traversal no nome do arquivo
-        $filename = basename(str_replace(["\r", "\n", "\0"], '', $filename));
-        $filename = preg_replace('/[^A-Za-z0-9._-]/', '_', $filename) ?: 'remessa.txt';
+        $filename = Util::sanitizeFilename($filename, 'remessa.txt');
 
         header('Content-type: text/plain');
         header('Content-Disposition: attachment; filename="' . $filename . '"');

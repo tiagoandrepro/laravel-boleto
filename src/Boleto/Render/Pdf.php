@@ -604,6 +604,10 @@ class Pdf extends AbstractPdf implements PdfContract
             $nameFile = Str::random(32);
         }
 
+        // Mesmo tratamento do download de remessa: o nome vai para o header
+        // Content-Disposition emitido pelo FPDF (OUTPUT_DOWNLOAD/STANDARD)
+        $nameFile = Util::sanitizeFilename($nameFile, 'boleto');
+
         return $this->Output($nameFile . '.pdf', $dest);
     }
 

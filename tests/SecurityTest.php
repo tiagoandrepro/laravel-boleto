@@ -50,6 +50,16 @@ class SecurityTest extends TestCase
         $this->assertSame('11.222.333/0001-81', $cnpj->getDocumento());
     }
 
+    public function testSanitizeFilename()
+    {
+        // CRLF neutralizado: nada de quebra de linha sobrevive no header
+        $this->assertSame('remessa.txtSet-Cookie__x_1', \Eduardokum\LaravelBoleto\Util::sanitizeFilename("remessa.txt\r\nSet-Cookie: x=1", 'fallback'));
+        $this->assertSame('etc_passwd', \Eduardokum\LaravelBoleto\Util::sanitizeFilename('../../etc passwd', 'fallback'));
+        $this->assertSame('fallback', \Eduardokum\LaravelBoleto\Util::sanitizeFilename('..', 'fallback'));
+        $this->assertSame('fallback', \Eduardokum\LaravelBoleto\Util::sanitizeFilename('', 'fallback'));
+        $this->assertSame('boleto_1.pdf', \Eduardokum\LaravelBoleto\Util::sanitizeFilename('boleto 1.pdf', 'fallback'));
+    }
+
     public function testHtmlEscapaNomeDoPagadorContraXss()
     {
         $inputs = Inputs::boletos();

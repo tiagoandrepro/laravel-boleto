@@ -641,7 +641,7 @@ abstract class AbstractAPI implements Api
     {
         if ($this->getResponseHttpCode() < 200 || $this->getResponseHttpCode() > 299) {
             if (in_array($this->getResponseHttpCode(), [401, 403]) && empty($retorno->body_text)) {
-                throw new UnauthorizedException($this->getBaseUrl(), $this->getConta(), $this->getCertificado(), $this->getCertificadoChave());
+                throw new UnauthorizedException($this->getBaseUrl(), $this->getConta());
             }
 
             throw new HttpException($this->getResponseHttpCode(), $this->getRequestInfo(), $retorno->body_text);
@@ -657,13 +657,16 @@ abstract class AbstractAPI implements Api
     private function execute()
     {
         $loop = 0;
-        if ($this->isDebug()) {
-            ob_start();
-            $this->log = fopen('php://output', 'w');
-            curl_setopt($this->curl, CURLOPT_VERBOSE, true);
-            curl_setopt($this->curl, CURLOPT_STDERR, $this->log);
-        }
+        $debugLog = '';
         do {
+            // Buffer/handle novos a cada tentativa: em retry (503) os da
+            // iteração anterior já foram fechados/colhidos abaixo
+            if ($this->isDebug()) {
+                ob_start();
+                $this->log = fopen('php://output', 'w');
+                curl_setopt($this->curl, CURLOPT_VERBOSE, true);
+                curl_setopt($this->curl, CURLOPT_STDERR, $this->log);
+            }
             if ($exec = curl_exec($this->curl)) {
                 $this->setResponseHttpCode(curl_getinfo($this->curl, CURLINFO_HTTP_CODE));
                 $this->setRequestInfo(curl_getinfo($this->curl));
@@ -672,7 +675,7 @@ abstract class AbstractAPI implements Api
 
                 if ($this->isDebug()) {
                     fclose($this->log);
-                    $this->log = $this->redactSensitiveData(ob_get_clean());
+                    $this->log = $debugLog . $this->redactSensitiveData(ob_get_clean());
                 }
                 $retorno = $this->parseResponse($exec);
                 $this->handleException($retorno);
@@ -682,7 +685,8 @@ abstract class AbstractAPI implements Api
 
             if ($this->isDebug()) {
                 fclose($this->log);
-                $this->log = $this->redactSensitiveData(ob_get_clean());
+                $debugLog .= $this->redactSensitiveData(ob_get_clean());
+                $this->log = $debugLog;
             }
 
             if ($this->getResponseHttpCode() == 503 && $loop < 5) {
@@ -713,9 +717,13 @@ abstract class AbstractAPI implements Api
      */
     private function redactSensitiveData($log)
     {
-        $log = preg_replace('/^([<>] )?(authorization|proxy-authorization|cookie|set-cookie|x-api-key|client_secret):\s*.*$/mi', '$1$2: [REDACTED]', (string) $log);
+        $original = (string) $log;
+        $log = preg_replace('/^([<>] )?(authorization|proxy-authorization|cookie|set-cookie|x-api-key|client_secret):\s*.*$/mi', '$1$2: [REDACTED]', $original);
+        $log = preg_replace('/Bearer\s+[A-Za-z0-9._~+\/-]+=*/i', 'Bearer [REDACTED]', (string) $log);
 
-        return preg_replace('/Bearer\s+[A-Za-z0-9._~+\/-]+=*/i', 'Bearer [REDACTED]', $log);
+        // preg_replace retorna null em falha de PCRE; nunca propague null
+        // (e nunca devolva o log cru, que conteria as credenciais)
+        return $log === null ? '[log indisponível: falha na redação de credenciais]' : $log;
     }
 
     /**

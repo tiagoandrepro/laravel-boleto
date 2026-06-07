@@ -21,6 +21,7 @@
     "neitanod/forceutf8": "^2.0",
     "setasign/fpdf": "^1.8",
     "ext-curl": "*",
+    "ext-gd": "*",
     "ext-json": "*",
     "ext-openssl": "*",
     "eduardokum/laravel-mail-auto-embed": "^2.13",
