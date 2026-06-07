@@ -10,3 +10,7 @@
 /generate-api.sh    export-ignore
 /manuais            export-ignore
 /docs               export-ignore
+
+# Fixtures de snapshot comparadas byte a byte — nunca converter EOL
+/tests/Snapshot/fixtures/** -text
+/tests/Retorno/files/** -text
