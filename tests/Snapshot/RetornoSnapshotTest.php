@@ -47,7 +47,9 @@ class RetornoSnapshotTest extends SnapshotTestCase
         } catch (Throwable $e) {
             $data = [
                 'exception' => get_class($e),
-                'message'   => $e->getMessage(),
+                // Caminho absoluto varia por máquina/SO — normaliza para o
+                // basename para que a fixture seja portável (Windows/Linux)
+                'message'   => str_replace($file, basename($file), $e->getMessage()),
             ];
         }
 

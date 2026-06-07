@@ -1,4 +1,4 @@
-# Guia de Upgrade — 5.0 (modernização PHP 8.2+ / Laravel 10–13)
+# Guia de Upgrade — 5.0 (modernização PHP 8.2+ / Laravel 11–13)
 
 ## Requisitos novos
 
@@ -6,7 +6,7 @@
 |---|---|---|
 | PHP | > 5.5 | **^8.2** (Laravel 13 exige 8.3+) |
 | ext-gd | implícito | **declarado** (QR Code PIX com php-qrcode ^5) |
-| Laravel | 6–12 | **10, 11, 12 ou 13** |
+| Laravel | 6–12 | **11, 12 ou 13** (o 10 está EOL e todas as versions 10.x têm security advisories que o Composer atual bloqueia por padrão) |
 | chillerlan/php-qrcode | ^3\|^4\|^5 | **^5.0** |
 | eduardokum/laravel-mail-auto-embed | dev-master | **^2.13** |
 | PHPUnit (dev) | ^6–^11 | ^10.5\|^11 |
@@ -81,4 +81,4 @@ Inter passa a funcionar com headers.
   bancos. Qualquer mudança de comportamento exige `UPDATE_SNAPSHOTS=1` e
   revisão manual do diff.
 - `rector.php` guarda a regra de nullables explícitos (PHP 8.4+).
-- CI: matriz PHP 8.2–8.5 × Laravel 10–13 (`.github/workflows/build.yml`).
+- CI: matriz PHP 8.2–8.5 × Laravel 11–13 (`.github/workflows/build.yml`).
